@@ -1,0 +1,3375 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <!-- 문자 인코딩 및 뷰포트 설정 -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 페이지 제목 및 메타 정보 -->
+    <title>LUMEN Entertainment</title>
+    <meta name="description" content="LUMEN Entertainment 공식 웹사이트 - 소리에 빛을 입히다" />
+    <meta property="og:title" content="LUMEN Entertainment" />
+    <meta property="og:description" content="LUMEN Entertainment 공식 웹사이트 - 소리에 빛을 입히다" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- 폰트 불러오기: Pretendard 우선, 없을 경우 Noto Sans KR 적용 -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap"
+    />
+
+    <style>
+      /* =====================================================================
+         1. 디자인 토큰 및 기본 초기화 (배경 60% / 구조 표면 30% / 포인트 10%)
+         ===================================================================== */
+      :root {
+        --bg-primary: #0B0B1A;
+        --bg-elevated: #111127;
+        --color-main: #FF4D9D;
+        --color-main-hover: #FF67AC;
+        --color-point: #3DE0FF;
+        --text-primary: #F5F7FF;
+        --text-secondary: #C2C8E2;
+        --text-muted: #828AA8;
+        --border-subtle: rgba(255, 255, 255, 0.08);
+        --header-height: 76px;
+        --container-max: 1200px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        /* 앵커 이동 시 부드러운 스크롤 적용 및 가로 스크롤 방지 */
+        scroll-behavior: smooth;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: clip;
+      }
+
+      body {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        min-height: 100vh;
+        min-height: 100dvh;
+        overflow-x: clip;
+        line-height: 1.6;
+        font-weight: 400;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        font-family: inherit;
+        cursor: pointer;
+        border: none;
+        background: none;
+      }
+
+      /* 접근성: 키보드 포커스 링 표시 */
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--color-point);
+        outline-offset: 3px;
+      }
+
+      /* 공통 콘텐츠 컨테이너 (PC 1440px 기준 정렬) */
+      .container {
+        width: 100%;
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: 0 32px;
+      }
+
+      /* =====================================================================
+         2. 상단 고정 내비게이션 바 (Header)
+         ===================================================================== */
+      .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-height);
+        z-index: 100;
+        background: rgba(11, 11, 26, 0.92);
+        border-bottom: 1px solid var(--border-subtle);
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+      }
+
+      .site-header.is-scrolled {
+        background: rgba(11, 11, 26, 0.92);
+        border-bottom-color: rgba(255, 255, 255, 0.12);
+      }
+
+      .header-inner {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+      }
+
+      /* 왼쪽 브랜드 로고 */
+      .brand-logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.375rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        color: var(--text-primary);
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .brand-logo:hover {
+        opacity: 0.88;
+      }
+
+      /* 코드로 구현한 로고 심볼 (외부 이미지 미사용) */
+      .brand-mark {
+        width: 20px;
+        height: 20px;
+        display: block;
+        flex-shrink: 0;
+      }
+
+      /* 오른쪽 메뉴 목록 */
+      .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        list-style: none;
+      }
+
+      .nav-link {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 2px;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        color: var(--text-secondary);
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          text-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 8px;
+        height: 1.5px;
+        background: var(--color-point);
+        box-shadow: 0 0 8px rgba(61, 224, 255, 0.7);
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .nav-link:hover,
+      .nav-link:active,
+      .nav-link.is-touch-glow {
+        color: var(--color-point);
+        transform: translateY(-2px);
+        text-shadow: 0 0 14px rgba(61, 224, 255, 0.75);
+      }
+
+      .nav-link.is-active {
+        color: var(--color-point);
+        text-shadow: 0 0 12px rgba(61, 224, 255, 0.45);
+      }
+
+      .nav-link:hover::after,
+      .nav-link:active::after,
+      .nav-link.is-touch-glow::after,
+      .nav-link.is-active::after {
+        transform: scaleX(1);
+      }
+
+      /* Audition 메뉴: 메인 컬러 버튼 스타일 (최소 44px 터치 높이) */
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 22px;
+        border-radius: 6px;
+        background-color: var(--color-main);
+        color: #FFFFFF;
+        font-size: 0.9375rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+        flex-shrink: 0;
+        border: 1px solid transparent;
+        box-shadow: 0 4px 18px rgba(255, 77, 157, 0.28);
+        -webkit-tap-highlight-color: transparent;
+        transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .nav-cta:hover,
+      .nav-cta.is-touch-glow {
+        background-color: var(--color-main-hover);
+        border-color: var(--color-point);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px rgba(61, 224, 255, 0.48);
+      }
+
+      .nav-cta.is-active {
+        border-color: var(--color-point);
+        box-shadow: 0 0 0 1px var(--color-point), 0 6px 22px rgba(61, 224, 255, 0.42);
+      }
+
+      .nav-cta:active {
+        border-color: var(--color-point);
+        box-shadow: 0 0 18px rgba(61, 224, 255, 0.65);
+        transform: translateY(0);
+      }
+
+      /* 모바일 햄버거 토글 버튼 (PC·태블릿에서는 숨김) */
+      .nav-toggle {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background-color: rgba(17, 17, 39, 0.72);
+        color: var(--text-primary);
+        -webkit-tap-highlight-color: transparent;
+        transition: border-color 0.2s ease,
+          color 0.2s ease,
+          box-shadow 0.2s ease,
+          background-color 0.2s ease;
+      }
+
+      .nav-toggle:hover,
+      .nav-toggle:active,
+      .nav-toggle.is-touch-glow,
+      .site-header.is-menu-open .nav-toggle {
+        border-color: var(--color-point);
+        color: var(--color-point);
+        box-shadow: 0 0 16px rgba(61, 224, 255, 0.45);
+        background-color: rgba(61, 224, 255, 0.08);
+      }
+
+      .nav-toggle-bars {
+        position: relative;
+        width: 20px;
+        height: 14px;
+        display: block;
+      }
+
+      .nav-toggle-line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 2px;
+        border-radius: 2px;
+        background-color: currentColor;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.2s ease,
+          top 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .nav-toggle-line:nth-child(1) {
+        top: 0;
+      }
+
+      .nav-toggle-line:nth-child(2) {
+        top: 6px;
+      }
+
+      .nav-toggle-line:nth-child(3) {
+        top: 12px;
+      }
+
+      .site-header.is-menu-open .nav-toggle-line:nth-child(1) {
+        top: 6px;
+        transform: rotate(45deg);
+      }
+
+      .site-header.is-menu-open .nav-toggle-line:nth-child(2) {
+        opacity: 0;
+      }
+
+      .site-header.is-menu-open .nav-toggle-line:nth-child(3) {
+        top: 6px;
+        transform: rotate(-45deg);
+      }
+
+      /* =====================================================================
+         3. 첫 화면 (Home) - 어두운 공연 무대 분위기 + 음파 파티클 배경
+         ===================================================================== */
+      .hero-section {
+        position: relative;
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: calc(var(--header-height) + 40px) 32px 96px;
+        overflow: hidden;
+        touch-action: pan-y;
+        background-color: var(--bg-primary);
+      }
+
+      /* 무대 조명 그라데이션 레이어 (상단 스포트라이트 빔 연출) */
+      .stage-lighting {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      /* 왼쪽 상단 핑크 스포트라이트 */
+      .stage-beam-left {
+        position: absolute;
+        top: -22%;
+        left: 14%;
+        width: 56vw;
+        height: 92vh;
+        background: radial-gradient(
+          ellipse at 50% 0%,
+          rgba(255, 77, 157, 0.22) 0%,
+          rgba(255, 77, 157, 0.06) 42%,
+          transparent 72%
+        );
+        transform: rotate(-16deg);
+        filter: blur(28px);
+      }
+
+      /* 오른쪽 상단 시안 스포트라이트 */
+      .stage-beam-right {
+        position: absolute;
+        top: -20%;
+        right: 12%;
+        width: 52vw;
+        height: 90vh;
+        background: radial-gradient(
+          ellipse at 50% 0%,
+          rgba(61, 224, 255, 0.16) 0%,
+          rgba(61, 224, 255, 0.04) 44%,
+          transparent 72%
+        );
+        transform: rotate(15deg);
+        filter: blur(30px);
+      }
+
+      /* 중앙 무대 바닥 조명 글로우 */
+      .stage-floor-glow {
+        position: absolute;
+        bottom: -140px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 78vw;
+        height: 320px;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(255, 77, 157, 0.14) 0%,
+          rgba(61, 224, 255, 0.08) 45%,
+          transparent 72%
+        );
+        filter: blur(20px);
+      }
+
+      /* 무대 바닥 수평 라인 */
+      .stage-horizon {
+        position: absolute;
+        bottom: 128px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(61, 224, 255, 0.18) 30%,
+          rgba(255, 77, 157, 0.28) 50%,
+          rgba(61, 224, 255, 0.18) 70%,
+          transparent 100%
+        );
+        opacity: 0.65;
+      }
+
+      /* Three.js 3D 파티클 무대 캔버스 마운트 */
+      #stage-wave-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      /* 파티클 위 텍스트 가독성 확보를 위한 중앙 다크 스크림 */
+      .hero-readability-scrim {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse 62% 52% at 50% 48%,
+          rgba(11, 11, 26, 0.78) 0%,
+          rgba(11, 11, 26, 0.44) 55%,
+          rgba(11, 11, 26, 0.08) 100%
+        );
+      }
+
+      /* 히어로 중심 콘텐츠 */
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 960px;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* 메인 타이틀: LUMEN ENTERTAINMENT */
+      .hero-title {
+        font-size: clamp(1.75rem, 5.2vw, 5.25rem);
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: 0.05em;
+        color: var(--text-primary);
+        text-wrap: balance;
+        text-shadow: 0 4px 24px rgba(11, 11, 26, 0.95), 0 12px 48px rgba(0, 0, 0, 0.85);
+      }
+
+      /* 슬로건: 소리에 빛을 입히다 */
+      .hero-slogan {
+        margin-top: 22px;
+        font-size: clamp(1.0625rem, 2vw, 1.625rem);
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: #E2E7FA;
+        text-shadow: 0 2px 16px rgba(11, 11, 26, 0.95);
+      }
+
+      /* CTA 버튼 그룹 */
+      .hero-actions {
+        margin-top: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 168px;
+        height: 50px;
+        padding: 0 32px;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+          border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+          color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      /* 메인 컬러 채움 버튼 (Listen Now) */
+      .btn-primary {
+        background-color: var(--color-main);
+        color: #FFFFFF;
+        box-shadow: 0 8px 28px rgba(255, 77, 157, 0.32);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--color-main-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 34px rgba(255, 77, 157, 0.45);
+      }
+
+      /* 테두리 버튼 (Apply Now) */
+      .btn-outline {
+        background-color: rgba(11, 11, 26, 0.72);
+        color: var(--text-primary);
+        border: 1.5px solid rgba(255, 255, 255, 0.45);
+      }
+
+      .btn-outline:hover {
+        border-color: var(--color-point);
+        color: var(--color-point);
+        background-color: rgba(61, 224, 255, 0.08);
+        transform: translateY(-2px);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+      }
+
+      /* 맨 아래 작은 Scroll 안내 (최소 44x44px 터치 영역 확보) */
+      .scroll-indicator {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 6px 12px;
+        gap: 10px;
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        transition: color 0.2s ease;
+      }
+
+      .scroll-indicator:hover {
+        color: var(--color-point);
+      }
+
+      .scroll-line {
+        width: 1px;
+        height: 28px;
+        background: linear-gradient(180deg, var(--color-point), transparent);
+        animation: scrollPulse 2s ease-in-out infinite;
+      }
+
+      @keyframes scrollPulse {
+        0%, 100% {
+          opacity: 0.45;
+          transform: scaleY(0.85);
+        }
+        50% {
+          opacity: 1;
+          transform: scaleY(1);
+        }
+      }
+
+      /* =====================================================================
+         3-1. Showcase 섹션: 400vh 스크롤 연동 3D LP 레코드 연출
+         ===================================================================== */
+      .showcase-section {
+        position: relative;
+        height: 400vh;
+        border-top: 1px solid var(--border-subtle);
+        background-color: var(--bg-primary);
+      }
+
+      /* 스크롤하는 동안 뷰포트에 고정되는 3D 무대 영역 (모바일 주소창 대응 100dvh) */
+      .showcase-sticky {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        background: radial-gradient(
+          ellipse 70% 65% at 38% 52%,
+          rgba(255, 77, 157, 0.08) 0%,
+          rgba(61, 224, 255, 0.05) 42%,
+          rgba(11, 11, 26, 0.98) 80%
+        );
+      }
+
+      /* Showcase 3D LP 캔버스 */
+      #showcase-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      /* 오른쪽 텍스트 오버레이 컨테이너 */
+      .showcase-content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: 0 32px;
+        display: flex;
+        justify-content: flex-end;
+        pointer-events: none;
+      }
+
+      .showcase-copy-panel {
+        position: relative;
+        width: 44%;
+        min-height: 220px;
+        display: flex;
+        align-items: center;
+      }
+
+      .showcase-stage-text {
+        position: absolute;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        transform: translateY(28px);
+        will-change: opacity, transform;
+      }
+
+      .showcase-kicker {
+        font-size: 0.875rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        color: var(--color-point);
+        margin-bottom: 14px;
+      }
+
+      .showcase-title {
+        font-size: clamp(2rem, 4.4vw, 4.25rem);
+        font-weight: 700;
+        line-height: 1.08;
+        letter-spacing: 0.03em;
+        color: var(--text-primary);
+        text-wrap: balance;
+      }
+
+      .showcase-subtitle {
+        margin-top: 18px;
+        font-size: clamp(1rem, 1.8vw, 1.5rem);
+        font-weight: 500;
+        color: var(--text-secondary);
+        letter-spacing: 0.01em;
+      }
+
+      .showcase-accent-line {
+        margin-top: 24px;
+        width: 56px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--color-main), var(--color-point));
+      }
+
+      .showcase-title--final {
+        font-size: clamp(1.875rem, 4vw, 3.75rem);
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: 0.01em;
+        color: var(--text-primary);
+        text-wrap: balance;
+      }
+
+      /* =====================================================================
+         4. 본문 섹션 공통 및 등장 애니메이션 (Artists ~ Audition)
+         ===================================================================== */
+      .stage-section {
+        position: relative;
+        padding: 112px 0;
+        border-top: 1px solid var(--border-subtle);
+        scroll-margin-top: var(--header-height);
+      }
+
+      .stage-section--alt {
+        background-color: rgba(17, 17, 39, 0.42);
+      }
+
+      /* Artists 이후 섹션 등장 애니메이션 (Showcase 제외) */
+      .reveal-section .reveal-inner {
+        opacity: 0;
+        transform: translate3d(0, 44px, 0);
+        transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+
+      .reveal-section.is-revealed .reveal-inner {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+
+      .section-header {
+        margin-bottom: 48px;
+      }
+
+      .section-heading {
+        font-size: clamp(2rem, 3vw, 2.75rem);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: var(--text-primary);
+        line-height: 1.2;
+      }
+
+      .section-accent-bar {
+        margin-top: 16px;
+        width: 40px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--color-main), var(--color-point));
+      }
+
+      /* ---------------------------------------------------------------------
+         4-1. Artists 카드 (인터랙션 3: 마우스 방향 기울기 + 메인색 발광)
+         --------------------------------------------------------------------- */
+      .artists-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 32px;
+      }
+
+      .artist-card {
+        position: relative;
+        border-radius: 14px;
+        padding: 36px;
+        background-color: #121229;
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        overflow: hidden;
+        transform: perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0);
+        transform-style: preserve-3d;
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: transform, box-shadow;
+        --glow-x: 50%;
+        --glow-y: 50%;
+      }
+
+      /* 마우스 위치를 따라다니는 메인 컬러(#FF4D9D) 빛 반사 레이어 */
+      .artist-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          360px circle at var(--glow-x) var(--glow-y),
+          rgba(255, 77, 157, 0.24),
+          rgba(255, 77, 157, 0.06) 45%,
+          transparent 75%
+        );
+        opacity: 0;
+        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+      }
+
+      .artist-card.is-tilting {
+        transition: transform 0.08s cubic-bezier(0.16, 1, 0.3, 1),
+          border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .artist-card:hover,
+      .artist-card.is-touch-active {
+        border-color: rgba(255, 77, 157, 0.72);
+        box-shadow: 0 18px 46px rgba(0, 0, 0, 0.45),
+          0 0 34px rgba(255, 77, 157, 0.28);
+      }
+
+      .artist-card:hover::before,
+      .artist-card.is-touch-active::before {
+        opacity: 1;
+      }
+
+      .artist-visual {
+        position: relative;
+        height: 180px;
+        border-radius: 10px;
+        margin-bottom: 28px;
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(61, 224, 255, 0.14) 0%,
+          rgba(255, 77, 157, 0.08) 48%,
+          rgba(11, 11, 26, 0.92) 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .artist-visual--sora {
+        background: radial-gradient(
+          circle at 50% 50%,
+          rgba(255, 77, 157, 0.16) 0%,
+          rgba(61, 224, 255, 0.07) 48%,
+          rgba(11, 11, 26, 0.92) 100%
+        );
+      }
+
+      .artist-emblem {
+        width: 112px;
+        height: 112px;
+        opacity: 0.92;
+      }
+
+      .artist-body {
+        position: relative;
+        z-index: 1;
+      }
+
+      .artist-name {
+        font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: var(--text-primary);
+        line-height: 1.25;
+      }
+
+      .artist-role {
+        margin-top: 8px;
+        font-size: clamp(0.9375rem, 1.3vw, 1rem);
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+
+      .artist-release {
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border-subtle);
+        font-size: 0.9375rem;
+        color: var(--color-point);
+        font-weight: 500;
+      }
+
+      /* ---------------------------------------------------------------------
+         4-2. Music 카드 (First Light + 3곡 + Play 토글 막대 파형 애니메이션)
+         --------------------------------------------------------------------- */
+      .music-card {
+        display: grid;
+        grid-template-columns: 320px minmax(0, 1fr);
+        gap: 48px;
+        align-items: center;
+        padding: 40px;
+        border-radius: 16px;
+        background-color: #121229;
+        border: 1px solid rgba(255, 255, 255, 0.09);
+      }
+
+      .album-artwork {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border-radius: 12px;
+        background: radial-gradient(
+          circle at 35% 35%,
+          rgba(61, 224, 255, 0.22) 0%,
+          rgba(255, 77, 157, 0.16) 45%,
+          #090916 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .album-disc {
+        width: 74%;
+        height: 74%;
+        border-radius: 50%;
+        background: repeating-radial-gradient(
+          circle at center,
+          #0e0f1f 0px,
+          #0e0f1f 6px,
+          rgba(61, 224, 255, 0.24) 7px,
+          #0e0f1f 8px
+        );
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: discSpin 9s linear infinite;
+        animation-play-state: paused;
+      }
+
+      .music-card.is-playing .album-disc {
+        animation-play-state: running;
+      }
+
+      @keyframes discSpin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .album-disc-label {
+        width: 34%;
+        height: 34%;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, #ff7ab8, var(--color-main));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
+      }
+
+      .album-disc-hole {
+        width: 24%;
+        height: 24%;
+        border-radius: 50%;
+        background-color: #090916;
+      }
+
+      .music-meta {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--color-point);
+        letter-spacing: 0.04em;
+      }
+
+      .music-title {
+        margin-top: 8px;
+        font-size: clamp(1.875rem, 3vw, 2.5rem);
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.2;
+      }
+
+      .tracklist {
+        margin-top: 28px;
+        list-style: none;
+        border-top: 1px solid var(--border-subtle);
+      }
+
+      .track-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .track-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .track-num {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .track-name {
+        font-size: 1.0625rem;
+        font-weight: 500;
+        color: var(--text-primary);
+      }
+
+      .track-duration {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Play 버튼 및 막대 파형 애니메이션 영역 */
+      .music-player-bar {
+        margin-top: 28px;
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+
+      .btn-play {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-width: 132px;
+        height: 46px;
+        padding: 0 24px;
+        border-radius: 6px;
+        background-color: var(--color-main);
+        color: #FFFFFF;
+        font-size: 0.9375rem;
+        font-weight: 700;
+        box-shadow: 0 6px 22px rgba(255, 77, 157, 0.3);
+        transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .btn-play:hover {
+        background-color: var(--color-main-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(255, 77, 157, 0.44);
+      }
+
+      .waveform-bars {
+        display: flex;
+        align-items: flex-end;
+        gap: 5px;
+        height: 36px;
+      }
+
+      .wave-bar {
+        width: 4px;
+        height: 28px;
+        border-radius: 2px;
+        background: linear-gradient(180deg, var(--color-point), var(--color-main));
+        transform-origin: bottom center;
+        transform: scaleY(0.22);
+        opacity: 0.45;
+        transition: opacity 0.25s ease, transform 0.08s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: transform, opacity;
+      }
+
+      .music-card.is-playing .wave-bar {
+        opacity: 1;
+      }
+
+      /* ---------------------------------------------------------------------
+         4-3. News 목록 (날짜 + 제목 3개)
+         --------------------------------------------------------------------- */
+      .news-list {
+        list-style: none;
+        border-top: 1px solid var(--border-subtle);
+        overflow-x: clip;
+      }
+
+      .news-item {
+        display: grid;
+        grid-template-columns: 112px minmax(0, 1fr);
+        align-items: center;
+        gap: 24px;
+        padding: 26px 8px;
+        border-bottom: 1px solid var(--border-subtle);
+        transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .news-item:hover {
+        background-color: rgba(255, 255, 255, 0.03);
+        transform: translateX(6px);
+      }
+
+      .news-date {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--color-point);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.04em;
+      }
+
+      .news-title {
+        font-size: clamp(1rem, 1.5vw, 1.1875rem);
+        font-weight: 500;
+        color: var(--text-primary);
+        line-height: 1.45;
+      }
+
+      /* ---------------------------------------------------------------------
+         4-4. Audition 섹션 (안내 문구 2줄 + Apply Now 메일 버튼)
+         --------------------------------------------------------------------- */
+      .audition-box {
+        padding: 56px 48px;
+        border-radius: 16px;
+        background: radial-gradient(
+          ellipse 75% 90% at 88% 50%,
+          rgba(255, 77, 157, 0.14) 0%,
+          rgba(61, 224, 255, 0.07) 45%,
+          #121229 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+      }
+
+      .audition-copy {
+        font-size: clamp(0.96875rem, 1.4vw, 1.1875rem);
+        font-weight: 400;
+        color: var(--text-secondary);
+        line-height: 1.85;
+      }
+
+      /* =====================================================================
+         5. 하단 푸터 (Contact + Instagram, YouTube 링크)
+         ===================================================================== */
+      .site-footer {
+        border-top: 1px solid var(--border-subtle);
+        background-color: #080814;
+        padding: 64px 0 56px;
+      }
+
+      .footer-grid {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 48px;
+      }
+
+      .footer-brand {
+        font-size: 1.125rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        color: var(--text-primary);
+      }
+
+      .footer-copyright {
+        margin-top: 12px;
+        font-size: 0.8125rem;
+        color: var(--text-muted);
+      }
+
+      .footer-slots {
+        display: flex;
+        align-items: flex-start;
+        gap: 80px;
+      }
+
+      .footer-slot-title {
+        font-size: 0.875rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: var(--text-secondary);
+        margin-bottom: 12px;
+      }
+
+      .footer-contact-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        font-size: 0.9375rem;
+        color: var(--text-primary);
+        transition: color 0.2s ease;
+      }
+
+      .footer-contact-link:hover {
+        color: var(--color-point);
+      }
+
+      .footer-sns-list {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .footer-sns-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0 18px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        font-weight: 500;
+        white-space: nowrap;
+        transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+          color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .footer-sns-btn:hover {
+        border-color: var(--color-point);
+        color: var(--color-point);
+        transform: translateY(-2px);
+      }
+
+      /* =====================================================================
+         6. 반응형 미디어 쿼리 (태블릿 768~1023px / 모바일 767px 이하)
+         ===================================================================== */
+      @media (max-width: 1023px) {
+        .container {
+          padding: 0 24px;
+        }
+
+        .header-inner {
+          gap: 20px;
+        }
+
+        /* 태블릿: 가로 메뉴 간격 축소 및 최소 44px 터치 영역 확보 */
+        .nav-menu {
+          gap: 16px;
+        }
+
+        .nav-link {
+          min-height: 44px;
+          padding: 0 4px;
+          font-size: 0.90625rem;
+        }
+
+        .nav-cta {
+          min-height: 44px;
+          padding: 0 18px;
+          font-size: 0.90625rem;
+        }
+
+        .showcase-content {
+          padding: 0 24px;
+        }
+
+        .showcase-copy-panel {
+          width: 48%;
+        }
+
+        .stage-section {
+          padding: 88px 0;
+        }
+
+        .artists-grid {
+          gap: 24px;
+        }
+
+        .artist-card {
+          padding: 28px;
+        }
+
+        .music-card {
+          grid-template-columns: 260px minmax(0, 1fr);
+          gap: 32px;
+          padding: 32px;
+        }
+
+        .audition-box {
+          padding: 44px 32px;
+          gap: 28px;
+        }
+
+        .footer-slots {
+          gap: 48px;
+        }
+
+        .footer-contact-link,
+        .footer-sns-btn {
+          min-height: 44px;
+          display: inline-flex;
+          align-items: center;
+        }
+      }
+
+      @media (max-width: 767px) {
+        :root {
+          --header-height: 64px;
+        }
+
+        .container {
+          padding: 0 20px;
+        }
+
+        .brand-logo {
+          font-size: 1.1875rem;
+          min-height: 44px;
+        }
+
+        /* 모바일 햄버거 버튼 표시 */
+        .nav-toggle {
+          display: inline-flex;
+        }
+
+        /* 모바일 펼침형 내비게이션 드로어 */
+        .nav-panel {
+          position: fixed;
+          top: var(--header-height);
+          left: 0;
+          right: 0;
+          background: rgba(11, 11, 26, 0.98);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+          padding: 16px 20px 24px;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-10px);
+          pointer-events: none;
+          transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+            visibility 0.24s ease;
+          box-shadow: 0 20px 44px rgba(0, 0, 0, 0.65);
+        }
+
+        .site-header.is-menu-open .nav-panel {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+          pointer-events: auto;
+        }
+
+        .nav-menu {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 6px;
+        }
+
+        .nav-link {
+          width: 100%;
+          min-height: 46px;
+          padding: 0 8px;
+          font-size: 1.0625rem;
+          justify-content: flex-start;
+        }
+
+        .nav-link::after {
+          bottom: 4px;
+        }
+
+        /* 모바일 메뉴 맨 아래 큰 Audition 버튼 */
+        .nav-cta {
+          width: 100%;
+          min-height: 50px;
+          margin-top: 12px;
+          font-size: 1rem;
+        }
+
+        .hero-section {
+          padding: calc(var(--header-height) + 24px) 20px 88px;
+        }
+
+        /* 모바일 성능 최적화: 대형 CSS blur 제거 (그라데이션 자체로 부드러운 조명 유지) */
+        .stage-beam-left,
+        .stage-beam-right,
+        .stage-floor-glow {
+          filter: none;
+        }
+
+        .hero-title {
+          letter-spacing: 0.04em;
+        }
+
+        .hero-slogan {
+          margin-top: 16px;
+        }
+
+        .hero-actions {
+          margin-top: 32px;
+          flex-wrap: wrap;
+          gap: 12px;
+          width: 100%;
+        }
+
+        .hero-actions .btn {
+          flex: 1 1 150px;
+          max-width: 240px;
+          min-width: 0;
+          min-height: 48px;
+          padding: 0 20px;
+        }
+
+        /* 모바일 Showcase: 상단 LP, 하단 텍스트 배치 */
+        .showcase-sticky {
+          align-items: flex-end;
+          background: radial-gradient(
+            ellipse 86% 52% at 50% 34%,
+            rgba(255, 77, 157, 0.09) 0%,
+            rgba(61, 224, 255, 0.05) 45%,
+            rgba(11, 11, 26, 0.98) 82%
+          );
+        }
+
+        .showcase-content {
+          padding: 0 20px 7dvh;
+          justify-content: center;
+        }
+
+        .showcase-copy-panel {
+          width: 100%;
+          min-height: 152px;
+          text-align: center;
+          justify-content: center;
+        }
+
+        .showcase-subtitle {
+          margin-top: 12px;
+        }
+
+        .showcase-accent-line {
+          margin: 18px auto 0;
+        }
+
+        .stage-section {
+          padding: 72px 0;
+        }
+
+        .section-header {
+          margin-bottom: 32px;
+        }
+
+        /* 모바일 Artists: 세로 1열 */
+        .artists-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .artist-card {
+          padding: 26px 22px;
+        }
+
+        .artist-visual {
+          height: 152px;
+          margin-bottom: 22px;
+        }
+
+        /* 모바일 Music: 세로 1열 */
+        .music-card {
+          grid-template-columns: 1fr;
+          gap: 24px;
+          padding: 24px 20px;
+        }
+
+        .album-artwork {
+          max-width: 220px;
+          margin: 0 auto;
+        }
+
+        .music-player-bar {
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+
+        .btn-play {
+          min-height: 46px;
+        }
+
+        /* 모바일 News: 날짜 위, 제목 아래 */
+        .news-item {
+          grid-template-columns: 1fr;
+          gap: 6px;
+          padding: 20px 4px;
+        }
+
+        .news-item:hover {
+          transform: none;
+        }
+
+        .audition-box {
+          flex-direction: column;
+          align-items: stretch;
+          padding: 28px 20px;
+          gap: 22px;
+        }
+
+        .audition-box .btn {
+          width: 100%;
+          min-height: 48px;
+        }
+
+        .site-footer {
+          padding: 48px 0 40px;
+        }
+
+        .footer-grid {
+          flex-direction: column;
+          gap: 28px;
+        }
+
+        .footer-slots {
+          flex-direction: column;
+          gap: 24px;
+          width: 100%;
+        }
+      }
+
+      /* 모션 축소 환경 설정 존중 */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .scroll-line,
+        .album-disc,
+        .wave-bar {
+          animation: none;
+        }
+        .reveal-section .reveal-inner {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===================================================================
+         상단 고정 헤더: 왼쪽 로고 "LUMEN", 오른쪽 메뉴 5개
+         =================================================================== -->
+    <header class="site-header" id="site-header">
+      <div class="container header-inner">
+        <!-- 로고 영역 -->
+        <a href="#home" class="brand-logo" aria-label="LUMEN Entertainment 홈으로 이동">
+          <!-- 코드 기반 SVG 프리즘 심볼 (외부 이미지 미사용) -->
+          <svg
+            class="brand-mark"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <polygon
+              points="12,2 21,19 3,19"
+              stroke="#3DE0FF"
+              stroke-width="1.8"
+              stroke-linejoin="round"
+            />
+            <line
+              x1="12"
+              y1="7"
+              x2="12"
+              y2="19"
+              stroke="#FF4D9D"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span>LUMEN</span>
+        </a>
+
+        <!-- 모바일 햄버거 메뉴 버튼 -->
+        <button
+          type="button"
+          class="nav-toggle"
+          id="nav-toggle"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+          aria-label="메뉴 열기"
+        >
+          <span class="nav-toggle-bars" aria-hidden="true">
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+          </span>
+        </button>
+
+        <!-- 상단 내비게이션 메뉴 -->
+        <nav id="primary-nav" class="nav-panel" aria-label="주 메뉴">
+          <ul class="nav-menu">
+            <li><a href="#home" class="nav-link is-active" data-nav="home">Home</a></li>
+            <li><a href="#artists" class="nav-link" data-nav="artists">Artists</a></li>
+            <li><a href="#music" class="nav-link" data-nav="music">Music</a></li>
+            <li><a href="#news" class="nav-link" data-nav="news">News</a></li>
+            <li><a href="#audition" class="nav-cta" data-nav="audition">Audition</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- =================================================================
+           1. Home 섹션: 첫 화면
+           ================================================================= -->
+      <section id="home" class="hero-section" aria-label="Home">
+        <!-- 무대 조명 배경 효과 -->
+        <div class="stage-lighting" aria-hidden="true">
+          <div class="stage-beam-left"></div>
+          <div class="stage-beam-right"></div>
+          <div class="stage-floor-glow"></div>
+          <div class="stage-horizon"></div>
+        </div>
+
+        <!-- Three.js 3D 파티클 무대 캔버스 및 가독성 보호 스크림 -->
+        <canvas id="stage-wave-canvas" aria-hidden="true"></canvas>
+        <div class="hero-readability-scrim" aria-hidden="true"></div>
+
+        <!-- 히어로 중심 문구 및 액션 버튼 -->
+        <div class="hero-content">
+          <h1 class="hero-title">LUMEN ENTERTAINMENT</h1>
+          <p class="hero-slogan">소리에 빛을 입히다</p>
+
+          <div class="hero-actions">
+            <a href="#music" class="btn btn-primary">Listen Now</a>
+            <a href="#audition" class="btn btn-outline">Apply Now</a>
+          </div>
+        </div>
+
+        <!-- 하단 스크롤 안내 -->
+        <a href="#artists" class="scroll-indicator" aria-label="아래 Artists 섹션으로 이동">
+          <span>Scroll</span>
+          <span class="scroll-line" aria-hidden="true"></span>
+        </a>
+      </section>
+
+      <!-- =================================================================
+           1-1. Showcase 섹션: 데뷔 앨범 "First Light" 스크롤 연동 3D LP 연출
+           ================================================================= -->
+      <section id="showcase" class="showcase-section" aria-label="First Light LP Showcase">
+        <div class="showcase-sticky">
+          <!-- 3D LP 레코드 렌더링 캔버스 -->
+          <canvas id="showcase-canvas" aria-hidden="true"></canvas>
+
+          <!-- 단계별 오른쪽 텍스트 영역 -->
+          <div class="showcase-content">
+            <div class="showcase-copy-panel">
+              <!-- 2단계(0.33 ~ 0.66) 문구 -->
+              <div class="showcase-stage-text" id="showcase-copy-stage2">
+                <p class="showcase-kicker">DEBUT ALBUM</p>
+                <h2 class="showcase-title">FIRST LIGHT</h2>
+                <p class="showcase-subtitle">BLUE ECHO 데뷔 앨범</p>
+                <div class="showcase-accent-line" aria-hidden="true"></div>
+              </div>
+
+              <!-- 3단계(0.66 ~ 1.0) 문구 -->
+              <div class="showcase-stage-text" id="showcase-copy-stage3">
+                <p class="showcase-kicker">LUMEN SOUND</p>
+                <h2 class="showcase-title--final">Light up the sound</h2>
+                <div class="showcase-accent-line" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           2. Artists 섹션 (BLUE ECHO, SORA 카드 2개 + 3D 틸트 & 발광)
+           ================================================================= -->
+      <section id="artists" class="stage-section stage-section--alt reveal-section" aria-labelledby="heading-artists">
+        <div class="container reveal-inner">
+          <div class="section-header">
+            <h2 id="heading-artists" class="section-heading">Artists</h2>
+            <div class="section-accent-bar" aria-hidden="true"></div>
+          </div>
+
+          <div class="artists-grid">
+            <!-- 아티스트 1: BLUE ECHO -->
+            <article class="artist-card" data-tilt-card>
+              <div class="artist-visual" aria-hidden="true">
+                <svg class="artist-emblem" viewBox="0 0 120 120" fill="none">
+                  <circle cx="60" cy="60" r="46" stroke="#3DE0FF" stroke-width="1.5" stroke-opacity="0.45" />
+                  <circle cx="60" cy="60" r="32" stroke="#FF4D9D" stroke-width="1.5" stroke-opacity="0.7" />
+                  <path d="M26 60 Q43 34 60 60 T94 60" stroke="#3DE0FF" stroke-width="2.4" stroke-linecap="round" />
+                  <path d="M32 60 Q46 80 60 60 T88 60" stroke="#FF4D9D" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div class="artist-body">
+                <h3 class="artist-name">BLUE ECHO</h3>
+                <p class="artist-role">4인조 일렉트로닉 밴드</p>
+                <p class="artist-release">데뷔 앨범 "First Light"</p>
+              </div>
+            </article>
+
+            <!-- 아티스트 2: SORA -->
+            <article class="artist-card" data-tilt-card>
+              <div class="artist-visual artist-visual--sora" aria-hidden="true">
+                <svg class="artist-emblem" viewBox="0 0 120 120" fill="none">
+                  <polygon points="60,16 98,86 22,86" stroke="#FF4D9D" stroke-width="1.8" stroke-linejoin="round" />
+                  <circle cx="60" cy="64" r="20" stroke="#3DE0FF" stroke-width="1.8" />
+                  <line x1="60" y1="28" x2="60" y2="96" stroke="#F5F7FF" stroke-width="1.2" stroke-opacity="0.65" />
+                </svg>
+              </div>
+              <div class="artist-body">
+                <h3 class="artist-name">SORA</h3>
+                <p class="artist-role">솔로 싱어송라이터</p>
+                <p class="artist-release">싱글 "Afterglow"</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           3. Music 섹션 (데뷔 앨범 First Light + 수록곡 3곡 + Play 파형 토글)
+           ================================================================= -->
+      <section id="music" class="stage-section reveal-section" aria-labelledby="heading-music">
+        <div class="container reveal-inner">
+          <div class="section-header">
+            <h2 id="heading-music" class="section-heading">Music</h2>
+            <div class="section-accent-bar" aria-hidden="true"></div>
+          </div>
+
+          <div class="music-card" id="music-album-card">
+            <!-- 코드 기반 LP 아트워크 -->
+            <div class="album-artwork" aria-hidden="true">
+              <div class="album-disc">
+                <div class="album-disc-label">
+                  <div class="album-disc-hole"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 앨범 정보, 트랙리스트 및 Play 파형 컨트롤 -->
+            <div>
+              <p class="music-meta">BLUE ECHO · Debut Album</p>
+              <h3 class="music-title">First Light</h3>
+
+              <ol class="tracklist">
+                <li class="track-item">
+                  <div class="track-left">
+                    <span class="track-num">01</span>
+                    <span class="track-name">First Light</span>
+                  </div>
+                  <span class="track-duration">03:42</span>
+                </li>
+                <li class="track-item">
+                  <div class="track-left">
+                    <span class="track-num">02</span>
+                    <span class="track-name">Neon Pulse</span>
+                  </div>
+                  <span class="track-duration">03:18</span>
+                </li>
+                <li class="track-item">
+                  <div class="track-left">
+                    <span class="track-num">03</span>
+                    <span class="track-name">Echo in the Dark</span>
+                  </div>
+                  <span class="track-duration">04:05</span>
+                </li>
+              </ol>
+
+              <div class="music-player-bar">
+                <button
+                  type="button"
+                  class="btn-play"
+                  id="music-play-btn"
+                  aria-pressed="false"
+                  aria-label="First Light 파형 애니메이션 재생"
+                >
+                  <span id="music-play-icon" aria-hidden="true">▶</span>
+                  <span id="music-play-label">Play</span>
+                </button>
+
+                <!-- 막대 파형 애니메이션 (Play 클릭 시 활성화, 소리 없음) -->
+                <div class="waveform-bars" aria-hidden="true">
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           4. News 섹션 (날짜 및 제목 목록 3개)
+           ================================================================= -->
+      <section id="news" class="stage-section stage-section--alt reveal-section" aria-labelledby="heading-news">
+        <div class="container reveal-inner">
+          <div class="section-header">
+            <h2 id="heading-news" class="section-heading">News</h2>
+            <div class="section-accent-bar" aria-hidden="true"></div>
+          </div>
+
+          <ul class="news-list">
+            <li class="news-item">
+              <time class="news-date" datetime="2026-12-05">12.05</time>
+              <span class="news-title">BLUE ECHO 데뷔 앨범 "First Light" 발매</span>
+            </li>
+            <li class="news-item">
+              <time class="news-date" datetime="2026-11-28">11.28</time>
+              <span class="news-title">데뷔 쇼케이스 일정 공개</span>
+            </li>
+            <li class="news-item">
+              <time class="news-date" datetime="2026-11-15">11.15</time>
+              <span class="news-title">LUMEN 신인 오디션 모집</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           5. Audition 섹션 (안내 문구 2줄 + Apply Now 메일 버튼)
+           ================================================================= -->
+      <section id="audition" class="stage-section reveal-section" aria-labelledby="heading-audition">
+        <div class="container reveal-inner">
+          <div class="section-header">
+            <h2 id="heading-audition" class="section-heading">Audition</h2>
+            <div class="section-accent-bar" aria-hidden="true"></div>
+          </div>
+
+          <div class="audition-box">
+            <div class="audition-copy">
+              <p>LUMEN Entertainment와 함께 음악으로 빛을 만들 아티스트를 찾습니다.</p>
+              <p>장르와 형식에 제한 없이, 당신만의 파동과 개성을 들려주세요.</p>
+            </div>
+            <a href="mailto:audition@example.com" class="btn btn-primary">Apply Now</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================================================================
+         하단 푸터 (Contact + Instagram, YouTube 링크)
+         =================================================================== -->
+    <footer class="site-footer" aria-label="사이트 하단 정보">
+      <div class="container footer-grid">
+        <div>
+          <div class="footer-brand">LUMEN ENTERTAINMENT</div>
+          <p class="footer-copyright">© LUMEN ENTERTAINMENT</p>
+        </div>
+
+        <div class="footer-slots">
+          <div class="footer-slot">
+            <h3 class="footer-slot-title">Contact</h3>
+            <a href="mailto:contact@example.com" class="footer-contact-link">contact@example.com</a>
+          </div>
+
+          <div class="footer-slot">
+            <h3 class="footer-slot-title">SNS</h3>
+            <div class="footer-sns-list">
+              <a href="#" class="footer-sns-btn">Instagram</a>
+              <a href="#" class="footer-sns-btn">YouTube</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // =====================================================================
+      // 1. 내비게이션 스크롤 추적(Showcase에서는 Home 유지), 부드러운 스크롤,
+      //    섹션 등장 애니메이션, Artists 3D 카드 틸트, Music 파형 토글
+      // =====================================================================
+      (function () {
+        const header = document.getElementById('site-header');
+        const navToggle = document.getElementById('nav-toggle');
+        const primaryNav = document.getElementById('primary-nav');
+        const navItems = document.querySelectorAll('[data-nav]');
+        const sections = document.querySelectorAll('main > section[id]');
+
+        // 모바일 햄버거 메뉴 열기/닫기 제어
+        function setMenuOpen(isOpen) {
+          if (!header || !navToggle) return;
+          header.classList.toggle('is-menu-open', isOpen);
+          navToggle.setAttribute('aria-expanded', String(isOpen));
+          navToggle.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
+        }
+
+        if (navToggle) {
+          navToggle.addEventListener('click', () => {
+            const isCurrentlyOpen = header.classList.contains('is-menu-open');
+            setMenuOpen(!isCurrentlyOpen);
+          });
+        }
+
+        // 화면이 태블릿(768px) 이상으로 넓어지면 모바일 메뉴 자동 닫기
+        window.addEventListener('resize', () => {
+          if (window.innerWidth >= 768 && header.classList.contains('is-menu-open')) {
+            setMenuOpen(false);
+          }
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && header.classList.contains('is-menu-open')) {
+            setMenuOpen(false);
+          }
+        });
+
+        // 모바일 터치 시 메뉴 버튼 및 링크 하늘색(#3DE0FF) 빛 반응 적용
+        const touchGlowTargets = document.querySelectorAll('.nav-link, .nav-cta, .nav-toggle');
+        touchGlowTargets.forEach((el) => {
+          let glowTimer = 0;
+          el.addEventListener(
+            'touchstart',
+            () => {
+              clearTimeout(glowTimer);
+              el.classList.add('is-touch-glow');
+            },
+            { passive: true }
+          );
+          const clearGlow = () => {
+            clearTimeout(glowTimer);
+            glowTimer = window.setTimeout(() => {
+              el.classList.remove('is-touch-glow');
+            }, 220);
+          };
+          el.addEventListener('touchend', clearGlow, { passive: true });
+          el.addEventListener('touchcancel', clearGlow, { passive: true });
+        });
+
+        // 스크롤 시 헤더 배경 전환 및 현재 보는 섹션 메뉴 활성화
+        function handleScroll() {
+          const scrollY = window.scrollY;
+          if (scrollY > 24) {
+            header.classList.add('is-scrolled');
+          } else {
+            header.classList.remove('is-scrolled');
+          }
+
+          const offset = header.offsetHeight + 140;
+          let currentId = 'home';
+
+          sections.forEach((section) => {
+            const top = section.offsetTop - offset;
+            if (scrollY >= top) {
+              // Showcase 구간을 지나가는 동안에는 상단 메뉴에서 Home을 활성 유지
+              currentId = section.id === 'showcase' ? 'home' : section.id;
+            }
+          });
+
+          navItems.forEach((item) => {
+            if (item.dataset.nav === currentId) {
+              item.classList.add('is-active');
+            } else {
+              item.classList.remove('is-active');
+            }
+          });
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+
+        // 내부 해시 링크 클릭 시 부드럽게 해당 섹션으로 이동 (모바일 메뉴 항목 클릭 시 닫힘)
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener('click', function (e) {
+            const targetId = this.getAttribute('href');
+            if (primaryNav && primaryNav.contains(this)) {
+              setMenuOpen(false);
+            }
+            if (!targetId) return;
+            if (targetId === '#') {
+              e.preventDefault();
+              return;
+            }
+            const targetEl = document.querySelector(targetId);
+            if (!targetEl) return;
+
+            e.preventDefault();
+            const headerOffset = targetId === '#home' ? 0 : header.offsetHeight;
+            const targetPosition = targetEl.getBoundingClientRect().top + window.scrollY - headerOffset;
+
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth',
+            });
+          });
+        });
+
+        // Artists 이후 섹션 등장 애니메이션 (Showcase 제외)
+        const revealSections = document.querySelectorAll('.reveal-section');
+        if ('IntersectionObserver' in window) {
+          const revealObserver = new IntersectionObserver(
+            (entries, observer) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-revealed');
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.14 }
+          );
+          revealSections.forEach((sec) => revealObserver.observe(sec));
+        } else {
+          revealSections.forEach((sec) => sec.classList.add('is-revealed'));
+        }
+
+        // 인터랙션 3: Artists 카드 마우스/터치 방향 기울기 및 메인색 발광 추적
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReducedMotion) {
+          document.querySelectorAll('[data-tilt-card]').forEach((card) => {
+            let touchResetTimer = 0;
+
+            function applyTiltAt(clientX, clientY, isTouch) {
+              const rect = card.getBoundingClientRect();
+              if (!rect.width || !rect.height) return;
+              const relX = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+              const relY = Math.max(0, Math.min(1, (clientY - rect.top) / rect.height));
+
+              // 포인터 방향으로 살짝 기울어지는 각도 계산 (-7deg ~ +7deg)
+              const rotateY = (relX - 0.5) * 14;
+              const rotateX = (0.5 - relY) * 12;
+
+              card.classList.add('is-tilting');
+              if (isTouch) {
+                card.classList.add('is-touch-active');
+              }
+              card.style.setProperty('--glow-x', `${(relX * 100).toFixed(1)}%`);
+              card.style.setProperty('--glow-y', `${(relY * 100).toFixed(1)}%`);
+              card.style.transform = `perspective(900px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
+            }
+
+            function resetTilt() {
+              card.classList.remove('is-tilting', 'is-touch-active');
+              card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0)';
+            }
+
+            card.addEventListener('mousemove', (e) => {
+              applyTiltAt(e.clientX, e.clientY, false);
+            });
+
+            card.addEventListener('mouseleave', resetTilt);
+
+            // 모바일/태블릿 터치 탭 시 즉시 기울어지고 발광한 뒤 부드럽게 복귀
+            card.addEventListener(
+              'touchstart',
+              (e) => {
+                const touch = e.touches && e.touches[0];
+                if (!touch) return;
+                clearTimeout(touchResetTimer);
+                applyTiltAt(touch.clientX, touch.clientY, true);
+              },
+              { passive: true }
+            );
+
+            const scheduleTouchReset = () => {
+              clearTimeout(touchResetTimer);
+              touchResetTimer = window.setTimeout(resetTilt, 340);
+            };
+
+            card.addEventListener('touchend', scheduleTouchReset, { passive: true });
+            card.addEventListener('touchcancel', scheduleTouchReset, { passive: true });
+          });
+        }
+
+        // ===================================================================
+        // Music 섹션 Play 버튼: Web Audio API 비트(킥·하이햇·신디사이저) + 실시간 파형 연동
+        // ===================================================================
+        const musicCard = document.getElementById('music-album-card');
+        const playBtn = document.getElementById('music-play-btn');
+        const playIcon = document.getElementById('music-play-icon');
+        const playLabel = document.getElementById('music-play-label');
+        const waveBars = document.querySelectorAll('#music-album-card .wave-bar');
+
+        // Home 3D 파티클 무대와 공유할 실시간 오디오 상태 (초기 상태: 꺼짐)
+        const audioState = (window.__lumenAudio = {
+          isPlaying: false,
+          level: 0,
+          bass: 0,
+          treble: 0,
+        });
+
+        let audioCtx = null;
+        let masterGain = null;
+        let analyser = null;
+        let freqData = null;
+        let noiseBuffer = null;
+        let schedulerTimer = null;
+        let meterRafId = 0;
+        let nextNoteTime = 0;
+        let currentStep = 0;
+
+        const BPM = 112;
+        const STEP_DURATION = 60 / BPM / 4; // 16분음표 길이(초)
+
+        // 잔잔한 일렉트로닉 신디사이저 코드 진행 (Fm9 -> DbMaj9 -> AbMaj7 -> Eb6)
+        const CHORD_PROGRESSION = [
+          [174.61, 207.65, 261.63, 311.13, 392.0],
+          [138.59, 174.61, 207.65, 261.63, 311.13],
+          [207.65, 261.63, 311.13, 392.0],
+          [155.56, 196.0, 233.08, 261.63, 349.23],
+        ];
+
+        // 오디오 컨텍스트 및 공용 노이즈 버퍼 초기화 (사용자 클릭 시 1회 생성)
+        function ensureAudioEngine() {
+          if (audioCtx) return;
+          const AudioContextCtor = window.AudioContext || window.webkitAudioContext;
+          if (!AudioContextCtor) return;
+
+          audioCtx = new AudioContextCtor();
+          masterGain = audioCtx.createGain();
+          masterGain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+
+          analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 64;
+          analyser.smoothingTimeConstant = 0.76;
+
+          masterGain.connect(analyser);
+          analyser.connect(audioCtx.destination);
+          freqData = new Uint8Array(analyser.frequencyBinCount);
+
+          // 하이햇용 화이트 노이즈 버퍼 생성
+          const bufferSize = Math.floor(audioCtx.sampleRate * 0.12);
+          noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+          const data = noiseBuffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+          }
+        }
+
+        // 킥 드럼 합성 (묵직한 저음 펀치)
+        function triggerKick(time) {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(142, time);
+          osc.frequency.exponentialRampToValueAtTime(42, time + 0.13);
+
+          gain.gain.setValueAtTime(0.95, time);
+          gain.gain.exponentialRampToValueAtTime(0.001, time + 0.3);
+
+          osc.connect(gain);
+          gain.connect(masterGain);
+          osc.start(time);
+          osc.stop(time + 0.32);
+        }
+
+        // 하이햇 합성 (고역대 하이패스 노이즈)
+        function triggerHiHat(time, isAccent) {
+          if (!noiseBuffer) return;
+          const source = audioCtx.createBufferSource();
+          source.buffer = noiseBuffer;
+
+          const highpass = audioCtx.createBiquadFilter();
+          highpass.type = 'highpass';
+          highpass.frequency.setValueAtTime(7600, time);
+
+          const gain = audioCtx.createGain();
+          const peak = isAccent ? 0.22 : 0.11;
+          const decay = isAccent ? 0.095 : 0.045;
+          gain.gain.setValueAtTime(peak, time);
+          gain.gain.exponentialRampToValueAtTime(0.001, time + decay);
+
+          source.connect(highpass);
+          highpass.connect(gain);
+          gain.connect(masterGain);
+          source.start(time);
+          source.stop(time + decay + 0.01);
+        }
+
+        // 잔잔한 신디사이저 코드 패드 합성
+        function triggerSynthChord(time, freqs) {
+          const filter = audioCtx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(1350, time);
+          filter.Q.setValueAtTime(1.2, time);
+
+          const padGain = audioCtx.createGain();
+          padGain.gain.setValueAtTime(0.001, time);
+          padGain.gain.linearRampToValueAtTime(0.16, time + 0.14);
+          padGain.gain.exponentialRampToValueAtTime(0.001, time + STEP_DURATION * 15.2);
+
+          filter.connect(padGain);
+          padGain.connect(masterGain);
+
+          freqs.forEach((freq, idx) => {
+            const osc = audioCtx.createOscillator();
+            osc.type = idx % 2 === 0 ? 'triangle' : 'sine';
+            osc.frequency.setValueAtTime(freq, time);
+            osc.detune.setValueAtTime((idx - 1.5) * 4, time);
+            osc.connect(filter);
+            osc.start(time);
+            osc.stop(time + STEP_DURATION * 15.5);
+          });
+        }
+
+        // 16스텝 시퀀서 스케줄링
+        function scheduleStep(step, time) {
+          // 킥 패턴: 0, 8번 정박 + 6, 14번 은은한 싱코페이션
+          if (step === 0 || step === 8 || step === 14) {
+            triggerKick(time);
+          }
+
+          // 하이햇 패턴: 엇박 강조 + 16분음표 리듬
+          if (step % 2 === 0) {
+            triggerHiHat(time, step % 4 === 2);
+          } else if (step === 11 || step === 15) {
+            triggerHiHat(time, false);
+          }
+
+          // 마디 시작(step 0)마다 신디사이저 코드 변경
+          if (step === 0) {
+            const chordIdx = Math.floor(currentMeasure % CHORD_PROGRESSION.length);
+            triggerSynthChord(time, CHORD_PROGRESSION[chordIdx]);
+          }
+        }
+
+        let currentMeasure = 0;
+
+        function runScheduler() {
+          if (!audioCtx || !audioState.isPlaying) return;
+          while (nextNoteTime < audioCtx.currentTime + 0.12) {
+            scheduleStep(currentStep, nextNoteTime);
+            nextNoteTime += STEP_DURATION;
+            currentStep = (currentStep + 1) % 16;
+            if (currentStep === 0) {
+              currentMeasure++;
+            }
+          }
+        }
+
+        // 실시간 오디오 주파수 분석 및 Music 막대 파형 업데이트
+        function updateAudioMeter() {
+          if (!audioState.isPlaying || !analyser || !freqData) return;
+
+          analyser.getByteFrequencyData(freqData);
+
+          // 저음(킥)과 고음(하이햇·신스) 에너지 계산
+          let bassSum = 0;
+          for (let i = 0; i < 4; i++) bassSum += freqData[i];
+          const bass = Math.min(1, bassSum / (4 * 210));
+
+          let trebleSum = 0;
+          for (let i = 6; i < 20; i++) trebleSum += freqData[i];
+          const treble = Math.min(1, trebleSum / (14 * 165));
+
+          let totalSum = 0;
+          for (let i = 0; i < 24; i++) totalSum += freqData[i];
+          const level = Math.min(1, totalSum / (24 * 175));
+
+          audioState.bass = bass;
+          audioState.treble = treble;
+          audioState.level = level;
+
+          // 막대 파형 12개를 주파수 대역별 실시간 음량에 맞춰 구동
+          waveBars.forEach((bar, index) => {
+            const binIndex = Math.min(freqData.length - 1, Math.floor((index / waveBars.length) * 18));
+            const rawVal = freqData[binIndex] / 255;
+            const scale = 0.2 + rawVal * 0.95;
+            bar.style.transform = `scaleY(${scale.toFixed(3)})`;
+          });
+
+          meterRafId = requestAnimationFrame(updateAudioMeter);
+        }
+
+        function resetWaveformBars() {
+          waveBars.forEach((bar) => {
+            bar.style.transform = 'scaleY(0.22)';
+          });
+        }
+
+        async function startMusic() {
+          ensureAudioEngine();
+          if (!audioCtx) return;
+
+          if (audioCtx.state === 'suspended') {
+            await audioCtx.resume();
+          }
+
+          audioState.isPlaying = true;
+          currentStep = 0;
+          currentMeasure = 0;
+          nextNoteTime = audioCtx.currentTime + 0.04;
+
+          masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+          masterGain.gain.setTargetAtTime(0.58, audioCtx.currentTime, 0.04);
+
+          runScheduler();
+          schedulerTimer = window.setInterval(runScheduler, 25);
+          cancelAnimationFrame(meterRafId);
+          updateAudioMeter();
+        }
+
+        function stopMusic() {
+          audioState.isPlaying = false;
+          audioState.level = 0;
+          audioState.bass = 0;
+          audioState.treble = 0;
+
+          if (schedulerTimer !== null) {
+            clearInterval(schedulerTimer);
+            schedulerTimer = null;
+          }
+          cancelAnimationFrame(meterRafId);
+          resetWaveformBars();
+
+          if (audioCtx && masterGain) {
+            const now = audioCtx.currentTime;
+            masterGain.gain.cancelScheduledValues(now);
+            masterGain.gain.setTargetAtTime(0.0001, now, 0.03);
+            window.setTimeout(() => {
+              if (!audioState.isPlaying && audioCtx && audioCtx.state === 'running') {
+                audioCtx.suspend();
+              }
+            }, 140);
+          }
+        }
+
+        if (musicCard && playBtn && playIcon && playLabel) {
+          playBtn.addEventListener('click', () => {
+            const isPlaying = musicCard.classList.toggle('is-playing');
+            playBtn.setAttribute('aria-pressed', String(isPlaying));
+            playIcon.textContent = isPlaying ? '❚❚' : '▶';
+            playLabel.textContent = isPlaying ? 'Pause' : 'Play';
+
+            if (isPlaying) {
+              startMusic();
+            } else {
+              stopMusic();
+            }
+          });
+        }
+      })();
+    </script>
+
+    <!-- =====================================================================
+         2. Three.js CDN 기반 3D 파티클 무대 (3000개 입자 + 사인파 + 주기적 동심원 파동)
+         ===================================================================== -->
+    <script type="module">
+      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
+
+      (function () {
+        const heroSection = document.getElementById('home');
+        const canvas = document.getElementById('stage-wave-canvas');
+        if (!heroSection || !canvas) return;
+
+        // 사용자의 모션 감소 설정 확인
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // 소프트웨어 WebGL 환경 감지 (헤드리스 브라우저 및 GPU 미지원 환경 대응)
+        const isSoftwareGl = (() => {
+          try {
+            const probeCanvas = document.createElement('canvas');
+            const gl = probeCanvas.getContext('webgl2') || probeCanvas.getContext('webgl');
+            if (!gl) return true;
+            const ext = gl.getExtension('WEBGL_debug_renderer_info');
+            const param = ext ? ext.UNMASKED_RENDERER_WEBGL : gl.RENDERER;
+            const gpu = String(gl.getParameter(param));
+            gl.getExtension('WEBGL_lose_context')?.loseContext();
+            return /SwiftShader|llvmpipe|softpipe|Software|Basic Render/i.test(gpu);
+          } catch {
+            return false;
+          }
+        })();
+
+        // 렌더러 초기화 (pixelRatio 최대 2로 제한, 소프트웨어 WebGL 시 1)
+        let renderer;
+        try {
+          renderer = new THREE.WebGLRenderer({
+            canvas,
+            antialias: !isSoftwareGl,
+            alpha: true,
+            powerPreference: 'high-performance',
+          });
+        } catch {
+          return;
+        }
+
+        // 모바일에서는 해상도 배율을 1.5로 제한해 렌더링 부하와 발열 감소
+        const getClampedPixelRatio = () => {
+          if (isSoftwareGl) return 1;
+          const maxRatio = window.innerWidth <= 767 ? 1.5 : 2;
+          return Math.min(window.devicePixelRatio || 1, maxRatio);
+        };
+
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.05;
+        renderer.setPixelRatio(getClampedPixelRatio());
+        renderer.setClearColor(0x0B0B1A, 0);
+
+        // 씬 및 원근 카메라 설정
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x0B0B1A, 0.014);
+
+        const initialWidth = Math.max(heroSection.clientWidth, 1);
+        const initialHeight = Math.max(heroSection.clientHeight, 1);
+        const camera = new THREE.PerspectiveCamera(
+          54,
+          initialWidth / initialHeight,
+          0.1,
+          220
+        );
+        camera.position.set(0, 7.5, 29);
+        camera.lookAt(0, -0.5, 0);
+
+        // ===================================================================
+        // 최대 3000개 3D 파티클 지오메트리 생성 (#FF4D9D 핑크 & #3DE0FF 하늘색 혼합)
+        // PC(1024px 이상) 3000개 / 태블릿(768~1023px) 2000개 / 모바일(767px 이하) 1000개
+        // ===================================================================
+        const PARTICLE_COUNT = 3000;
+        const positions = new Float32Array(PARTICLE_COUNT * 3);
+        const colors = new Float32Array(PARTICLE_COUNT * 3);
+        const sizes = new Float32Array(PARTICLE_COUNT);
+        const phases = new Float32Array(PARTICLE_COUNT);
+
+        const pinkColor = new THREE.Color('#FF4D9D');
+        const skyColor = new THREE.Color('#3DE0FF');
+        const tempColor = new THREE.Color();
+
+        // 화면 전체를 입체적으로 채우는 원형/광폭 무대 분포 배치
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+          const i3 = i * 3;
+          let x = 0;
+          let y = 0;
+          let z = 0;
+
+          if (i < 2400) {
+            // 2400개: 무대 바닥 및 음파 필드를 채우는 광폭 3D 평면 분포
+            const gridIndex = i;
+            const cols = 60;
+            const rows = 40;
+            const col = gridIndex % cols;
+            const row = Math.floor(gridIndex / cols);
+
+            const u = col / (cols - 1) - 0.5;
+            const v = row / (rows - 1) - 0.5;
+
+            x = u * 96 + (Math.random() - 0.5) * 1.4;
+            z = v * 66 + (Math.random() - 0.5) * 1.4;
+            y = -3.2 + (Math.random() - 0.5) * 1.8;
+          } else {
+            // 600개: 공연장 상단 공간까지 화면 전체를 감싸는 부유 입자
+            x = (Math.random() - 0.5) * 92;
+            y = -2.0 + Math.random() * 22.0;
+            z = (Math.random() - 0.5) * 62;
+          }
+
+          positions[i3] = x;
+          positions[i3 + 1] = y;
+          positions[i3 + 2] = z;
+
+          // 핑크(#FF4D9D)와 하늘색(#3DE0FF) 자연스러운 혼합 배색
+          const mixFactor = Math.random();
+          if (mixFactor < 0.45) {
+            tempColor.copy(pinkColor);
+          } else if (mixFactor < 0.9) {
+            tempColor.copy(skyColor);
+          } else {
+            tempColor.copy(pinkColor).lerp(skyColor, Math.random());
+          }
+
+          colors[i3] = tempColor.r;
+          colors[i3 + 1] = tempColor.g;
+          colors[i3 + 2] = tempColor.b;
+
+          // 입자별 크기 및 위상 시드 부여
+          sizes[i] = 1.6 + Math.random() * 2.4;
+          phases[i] = Math.random() * Math.PI * 2;
+        }
+
+        // 태블릿(2000개)·모바일(1000개)에서 drawRange를 줄여도 무대 전체가 균등하게 채워지도록 인덱스 섞기
+        for (let i = PARTICLE_COUNT - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          if (i === j) continue;
+
+          const i3 = i * 3;
+          const j3 = j * 3;
+          for (let k = 0; k < 3; k++) {
+            const tmpPos = positions[i3 + k];
+            positions[i3 + k] = positions[j3 + k];
+            positions[j3 + k] = tmpPos;
+
+            const tmpCol = colors[i3 + k];
+            colors[i3 + k] = colors[j3 + k];
+            colors[j3 + k] = tmpCol;
+          }
+
+          const tmpSize = sizes[i];
+          sizes[i] = sizes[j];
+          sizes[j] = tmpSize;
+
+          const tmpPhase = phases[i];
+          phases[i] = phases[j];
+          phases[j] = tmpPhase;
+        }
+
+        // 모바일 부하 경감을 위해 767px 이하에서는 600개로 최적화
+        function getTargetParticleCount() {
+          const w = window.innerWidth;
+          if (w >= 1024) return 3000;
+          if (w >= 768) return 2000;
+          return 600;
+        }
+
+        const particleGeometry = new THREE.BufferGeometry();
+        particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        particleGeometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+        particleGeometry.setAttribute('aPhase', new THREE.BufferAttribute(phases, 1));
+        particleGeometry.setDrawRange(0, getTargetParticleCount());
+
+        // GPU 셰이더 머티리얼: 사인파 물결 + 주기적 동심원 파동 + 마우스 흩어짐 + 오디오 반응
+        const particleUniforms = {
+          uTime: { value: 0 },
+          uPixelRatio: { value: getClampedPixelRatio() },
+          uWavePeriod: { value: 3.8 }, // 3.8초마다 중앙에서 바깥으로 동심원 파동 발생
+          uMouseWorld: { value: new THREE.Vector3(0, -2, 0) }, // 마우스 3D 투영 좌표
+          uScatterPower: { value: 0 }, // 흩어짐 강도 (이동 시 증가 -> 멈추면 천천히 0으로 복귀)
+          uAudioLevel: { value: 0 }, // 실시간 전체 음량 (0 ~ 1)
+          uAudioBass: { value: 0 }, // 실시간 저음 킥 비트 (0 ~ 1)
+        };
+
+        const particleMaterial = new THREE.ShaderMaterial({
+          uniforms: particleUniforms,
+          transparent: true,
+          depthWrite: false,
+          blending: THREE.AdditiveBlending,
+          vertexColors: true,
+          vertexShader: `
+            uniform float uTime;
+            uniform float uPixelRatio;
+            uniform float uWavePeriod;
+            uniform vec3 uMouseWorld;
+            uniform float uScatterPower;
+            uniform float uAudioLevel;
+            uniform float uAudioBass;
+
+            attribute float aSize;
+            attribute float aPhase;
+
+            varying vec3 vColor;
+            varying float vAlpha;
+            varying float vPulse;
+
+            void main() {
+              vColor = color;
+              vec3 pos = position;
+
+              // 1) 가만히 있어도 천천히 물결치는 다중 사인파 움직임 (재생 중 음량에 따라 더 크게 출렁임)
+              float audioWaveBoost = 1.0 + uAudioLevel * 1.65 + uAudioBass * 1.45;
+              float waveX = sin(pos.x * 0.16 + uTime * 0.85 + aPhase * 0.25) * 1.15;
+              float waveZ = cos(pos.z * 0.19 - uTime * 0.72) * 0.95;
+              float waveDiag = sin((pos.x + pos.z) * 0.11 + uTime * 0.55) * 0.7;
+              pos.y += (waveX + waveZ + waveDiag) * audioWaveBoost;
+
+              // 2) 화면 중앙에서 바깥으로 주기적으로 퍼져 나가는 동심원 파동 + 킥 비트 출렁임
+              float distFromCenter = length(vec2(pos.x, pos.z));
+              float cycle = mod(uTime, uWavePeriod);
+              float waveRadius = cycle * 15.5;
+              float ringDiff = distFromCenter - waveRadius;
+
+              // 링 두께 및 시작/끝 부드러운 페이드 처리
+              float ringEnvelope = exp(-(ringDiff * ringDiff) / 14.0);
+              float cycleFade = smoothstep(0.0, 0.35, cycle) * (1.0 - smoothstep(uWavePeriod - 0.9, uWavePeriod, cycle));
+              float pulse = ringEnvelope * cycleFade;
+
+              float beatRipple = sin(distFromCenter * 0.32 - uTime * 3.4) * uAudioBass * 2.2;
+              pos.y += pulse * 2.8 + beatRipple;
+              vPulse = clamp(pulse + uAudioBass * 0.45, 0.0, 1.0);
+
+              // 3) 인터랙션 1: 마우스 주변에서 파티클이 흩어졌다가 천천히 제자리로 복귀
+              vec2 deltaMouse = pos.xz - uMouseWorld.xz;
+              float distToMouse = length(deltaMouse);
+              float scatterRadius = 12.5;
+              float falloff = smoothstep(scatterRadius, 0.0, distToMouse);
+              vec2 pushDir = distToMouse > 0.001
+                ? normalize(deltaMouse)
+                : vec2(cos(aPhase), sin(aPhase));
+              float scatterOffset = falloff * falloff * uScatterPower * 6.2;
+              pos.x += pushDir.x * scatterOffset;
+              pos.z += pushDir.y * scatterOffset;
+              pos.y += falloff * uScatterPower * 2.4;
+
+              vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+              gl_Position = projectionMatrix * mvPosition;
+
+              // 원근 거리에 따른 입자 크기 및 해상도(pixelRatio 최대 2) 보정
+              float depthScale = 230.0 / max(-mvPosition.z, 1.0);
+              gl_PointSize = (aSize + pulse * 2.6 + falloff * uScatterPower * 1.4 + uAudioBass * 2.4) * uPixelRatio * depthScale;
+
+              // 거리와 파동에 따른 투명도 조절 (텍스트 영역 시인성 유지)
+              float distFade = smoothstep(78.0, 10.0, -mvPosition.z);
+              vAlpha = clamp(0.42 + pulse * 0.52 + falloff * uScatterPower * 0.25 + uAudioLevel * 0.22, 0.0, 0.95) * distFade;
+            }
+          `,
+          fragmentShader: `
+            varying vec3 vColor;
+            varying float vAlpha;
+            varying float vPulse;
+
+            void main() {
+              // 사각형 포인트를 부드러운 발광 원형 입자로 변환
+              vec2 coord = gl_PointCoord - vec2(0.5);
+              float dist = length(coord);
+              if (dist > 0.5) discard;
+
+              float radialGlow = pow(1.0 - dist * 2.0, 1.8);
+              vec3 finalColor = mix(vColor, vec3(1.0), vPulse * 0.28);
+
+              gl_FragColor = vec4(finalColor, radialGlow * vAlpha);
+            }
+          `,
+        });
+
+        const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+        scene.add(particleSystem);
+
+        // 인터랙션 1 & 2용 재사용 벡터/레이캐스터 (렌더 루프 GC 방지)
+        const raycaster = new THREE.Raycaster();
+        const pointerNdc = new THREE.Vector2(0, 0);
+        const stagePlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 2.2);
+        const fallbackPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 12);
+        const mouseWorldTarget = new THREE.Vector3(0, -2.2, 0);
+        const mouseWorldCurrent = new THREE.Vector3(0, -2.2, 0);
+
+        let pointerTargetX = 0;
+        let pointerTargetY = 0;
+        let pointerCurrentX = 0;
+        let pointerCurrentY = 0;
+        let scatterPower = 0;
+        let targetScatterPower = 0;
+
+        // 인터랙션 2: Home 구간 스크롤 비율(0~1) 추적 (Showcase 진입 시 1로 고정되어 멈춤)
+        let targetScrollRatio = 0;
+        let currentScrollRatio = 0;
+
+        function updateHomeScrollRatio() {
+          const heroHeight = Math.max(heroSection.offsetHeight, 1);
+          targetScrollRatio = Math.max(0, Math.min(1, window.scrollY / heroHeight));
+        }
+
+        window.addEventListener('scroll', updateHomeScrollRatio, { passive: true });
+        updateHomeScrollRatio();
+
+        function updatePointerScatter(clientX, clientY) {
+          const rect = heroSection.getBoundingClientRect();
+          if (!rect.width || !rect.height) return;
+          const nx = ((clientX - rect.left) / rect.width) * 2 - 1;
+          const ny = -(((clientY - rect.top) / rect.height) * 2 - 1);
+
+          pointerTargetX = nx;
+          pointerTargetY = -ny;
+
+          // 포인터/터치 좌표를 3D 무대 평면으로 투영해 흩어짐 중심 업데이트
+          pointerNdc.set(nx, ny);
+          raycaster.setFromCamera(pointerNdc, camera);
+          if (!raycaster.ray.intersectPlane(stagePlane, mouseWorldTarget)) {
+            raycaster.ray.intersectPlane(fallbackPlane, mouseWorldTarget);
+          }
+
+          // 움직이거나 드래그할 때 흩어짐 강도를 올리고 정지 후에는 서서히 0으로 복귀
+          targetScatterPower = 1.0;
+        }
+
+        if (!prefersReducedMotion) {
+          heroSection.addEventListener('mousemove', (e) => {
+            updatePointerScatter(e.clientX, e.clientY);
+          });
+
+          heroSection.addEventListener('mouseleave', () => {
+            targetScatterPower = 0;
+          });
+
+          // 모바일·태블릿 터치 및 드래그 반응 (passive: true로 세로 스크롤 방해 없음)
+          heroSection.addEventListener(
+            'touchstart',
+            (e) => {
+              const touch = e.touches && e.touches[0];
+              if (touch) updatePointerScatter(touch.clientX, touch.clientY);
+            },
+            { passive: true }
+          );
+
+          heroSection.addEventListener(
+            'touchmove',
+            (e) => {
+              const touch = e.touches && e.touches[0];
+              if (touch) updatePointerScatter(touch.clientX, touch.clientY);
+            },
+            { passive: true }
+          );
+
+          heroSection.addEventListener(
+            'touchend',
+            () => {
+              targetScatterPower = 0;
+            },
+            { passive: true }
+          );
+
+          heroSection.addEventListener(
+            'touchcancel',
+            () => {
+              targetScatterPower = 0;
+            },
+            { passive: true }
+          );
+        }
+
+        // ===================================================================
+        // 창 크기 변경(resize) 대응: 비율 깨짐 없이 화면 전체 채우기 + 파티클 수 동기화
+        // ===================================================================
+        function handleResize() {
+          const width = Math.max(heroSection.clientWidth, 1);
+          const height = Math.max(heroSection.clientHeight, 1);
+          const pixelRatio = getClampedPixelRatio();
+
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
+
+          renderer.setPixelRatio(pixelRatio);
+          renderer.setSize(width, height, false);
+          particleUniforms.uPixelRatio.value = pixelRatio;
+          particleGeometry.setDrawRange(0, getTargetParticleCount());
+          updateHomeScrollRatio();
+        }
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        const resizeObserver =
+          typeof ResizeObserver !== 'undefined' ? new ResizeObserver(handleResize) : null;
+        if (resizeObserver) {
+          resizeObserver.observe(heroSection);
+        }
+
+        // WebGL 컨텍스트 손실 및 복구 안전 처리
+        let isContextLost = false;
+        canvas.addEventListener('webglcontextlost', (e) => {
+          e.preventDefault();
+          isContextLost = true;
+        });
+        canvas.addEventListener('webglcontextrestored', () => {
+          isContextLost = false;
+          handleResize();
+        });
+
+        // 첫 프레임 셰이더 컴파일 (GPU 환경)
+        if (!isSoftwareGl) {
+          renderer.compile(scene, camera);
+        }
+
+        // 소프트웨어 WebGL 환경용 프레임 간격 제어 헬퍼
+        let frameId = 0;
+        function afterDraw(cb) {
+          const gl = renderer.getContext();
+          if (gl && typeof gl.fenceSync === 'function') {
+            const sync = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
+            gl.flush();
+            const poll = () => {
+              const state = sync && gl.getSyncParameter(sync, gl.SYNC_STATUS);
+              if (state === gl.UNSIGNALED) {
+                frameId = window.setTimeout(poll, 5);
+              } else {
+                if (sync) gl.deleteSync(sync);
+                frameId = window.setTimeout(cb, 80);
+              }
+            };
+            frameId = window.setTimeout(poll, 5);
+          } else {
+            frameId = window.setTimeout(cb, 80);
+          }
+        }
+
+        // 애니메이션 루프 (탭이 가려져 있을 때는 자동 일시정지, 복귀 시 이어서 재생)
+        const clock = new THREE.Clock();
+        let isTabVisible = !document.hidden;
+        let simElapsed = 0;
+
+        function animate() {
+          if (isContextLost || !isTabVisible) return;
+
+          const delta = Math.min(clock.getDelta(), 0.1);
+          simElapsed += delta;
+          particleUniforms.uTime.value = prefersReducedMotion ? 1.2 : simElapsed;
+
+          if (!prefersReducedMotion) {
+            // 마우스 3D 위치 및 흩어짐 강도 부드럽게 감쇠 보간 (천천히 제자리 복귀)
+            const scatterRise = 1 - Math.exp(-8.5 * delta);
+            const scatterDecay = 1 - Math.exp(-1.9 * delta);
+            scatterPower = THREE.MathUtils.lerp(scatterPower, targetScatterPower, scatterRise);
+            targetScatterPower = THREE.MathUtils.lerp(targetScatterPower, 0, scatterDecay);
+            mouseWorldCurrent.lerp(mouseWorldTarget, 1 - Math.exp(-10.0 * delta));
+
+            particleUniforms.uScatterPower.value = scatterPower;
+            particleUniforms.uMouseWorld.value.copy(mouseWorldCurrent);
+
+            // Home 구간 스크롤에 따른 카메라 전진 보간 (Showcase부터는 1.0에서 멈춤)
+            currentScrollRatio = THREE.MathUtils.lerp(
+              currentScrollRatio,
+              targetScrollRatio,
+              1 - Math.exp(-6.5 * delta)
+            );
+
+            // Music 섹션 Web Audio 음량에 맞춰 파티클 진폭 실시간 연동
+            const liveAudio = window.__lumenAudio;
+            const targetAudioLevel = liveAudio && liveAudio.isPlaying ? liveAudio.level : 0;
+            const targetAudioBass = liveAudio && liveAudio.isPlaying ? liveAudio.bass : 0;
+            const audioSmooth = 1 - Math.exp(-12.0 * delta);
+            particleUniforms.uAudioLevel.value = THREE.MathUtils.lerp(
+              particleUniforms.uAudioLevel.value,
+              targetAudioLevel,
+              audioSmooth
+            );
+            particleUniforms.uAudioBass.value = THREE.MathUtils.lerp(
+              particleUniforms.uAudioBass.value,
+              targetAudioBass,
+              audioSmooth
+            );
+          }
+
+          // 마우스 미세 시점 반응 + Home 스크롤 깊이 이동 결합
+          pointerCurrentX += (pointerTargetX - pointerCurrentX) * 0.04;
+          pointerCurrentY += (pointerTargetY - pointerCurrentY) * 0.04;
+
+          const camZ = THREE.MathUtils.lerp(29, 9.5, currentScrollRatio);
+          const camY = THREE.MathUtils.lerp(7.5, 2.2, currentScrollRatio) - pointerCurrentY * 1.1;
+          const lookY = THREE.MathUtils.lerp(-0.5, 0.35, currentScrollRatio);
+
+          camera.position.set(pointerCurrentX * 1.8, camY, camZ);
+          camera.lookAt(0, lookY, 0);
+
+          renderer.render(scene, camera);
+
+          if (!prefersReducedMotion && isTabVisible) {
+            if (isSoftwareGl) {
+              afterDraw(animate);
+            } else {
+              frameId = requestAnimationFrame(animate);
+            }
+          }
+        }
+
+        function handleVisibilityChange() {
+          if (document.hidden) {
+            isTabVisible = false;
+            cancelAnimationFrame(frameId);
+            clearTimeout(frameId);
+          } else {
+            isTabVisible = true;
+            // 가려져 있던 구간의 큰 delta를 비우고 이어서 재생
+            clock.getDelta();
+            animate();
+          }
+        }
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        if (isTabVisible) {
+          animate();
+        }
+
+        // 페이지 이탈 시 리소스 정리
+        window.addEventListener('beforeunload', () => {
+          cancelAnimationFrame(frameId);
+          clearTimeout(frameId);
+          document.removeEventListener('visibilitychange', handleVisibilityChange);
+          if (resizeObserver) resizeObserver.disconnect();
+          window.removeEventListener('resize', handleResize);
+          particleGeometry.dispose();
+          particleMaterial.dispose();
+          renderer.dispose();
+        });
+      })();
+    </script>
+
+    <!-- =====================================================================
+         3. Showcase 섹션: 스크롤 연동 3D LP 레코드 회전·이동·분해 연출
+         ===================================================================== -->
+    <script type="module">
+      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
+
+      (function () {
+        const showcaseSection = document.getElementById('showcase');
+        const canvas = document.getElementById('showcase-canvas');
+        const copyStage2 = document.getElementById('showcase-copy-stage2');
+        const copyStage3 = document.getElementById('showcase-copy-stage3');
+
+        if (!showcaseSection || !canvas || !copyStage2 || !copyStage3) return;
+
+        // 사용자의 모션 감소 설정 확인
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // 소프트웨어 WebGL 환경 감지
+        const isSoftwareGl = (() => {
+          try {
+            const probeCanvas = document.createElement('canvas');
+            const gl = probeCanvas.getContext('webgl2') || probeCanvas.getContext('webgl');
+            if (!gl) return true;
+            const ext = gl.getExtension('WEBGL_debug_renderer_info');
+            const param = ext ? ext.UNMASKED_RENDERER_WEBGL : gl.RENDERER;
+            const gpu = String(gl.getParameter(param));
+            gl.getExtension('WEBGL_lose_context')?.loseContext();
+            return /SwiftShader|llvmpipe|softpipe|Software|Basic Render/i.test(gpu);
+          } catch {
+            return false;
+          }
+        })();
+
+        // 렌더러 초기화 (pixelRatio 최대 2로 제한)
+        let renderer;
+        try {
+          renderer = new THREE.WebGLRenderer({
+            canvas,
+            antialias: !isSoftwareGl,
+            alpha: true,
+            powerPreference: 'high-performance',
+          });
+        } catch {
+          return;
+        }
+
+        // 모바일에서는 해상도 배율을 1.5로 제한해 부드러운 스크롤 프레임 유지
+        const getClampedPixelRatio = () => {
+          if (isSoftwareGl) return 1;
+          const maxRatio = window.innerWidth <= 767 ? 1.5 : 2;
+          return Math.min(window.devicePixelRatio || 1, maxRatio);
+        };
+
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.15;
+        renderer.setPixelRatio(getClampedPixelRatio());
+        renderer.setClearColor(0x0B0B1A, 0);
+
+        // 씬 및 카메라 설정
+        const scene = new THREE.Scene();
+        const stickyContainer = canvas.parentElement;
+        const initWidth = Math.max(stickyContainer.clientWidth, 1);
+        const initHeight = Math.max(stickyContainer.clientHeight, 1);
+
+        const camera = new THREE.PerspectiveCamera(
+          42,
+          initWidth / initHeight,
+          0.1,
+          100
+        );
+        camera.position.set(0, 0.8, 12.2);
+        camera.lookAt(0, 0, 0);
+
+        // ===================================================================
+        // 은은한 스튜디오 빛 반사용 절차적 환경맵 생성 (외부 HDR 파일 미사용)
+        // ===================================================================
+        const envScene = new THREE.Scene();
+        envScene.background = new THREE.Color(0x0B0B1A);
+
+        const topPanel = new THREE.Mesh(
+          new THREE.PlaneGeometry(16, 10),
+          new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide })
+        );
+        topPanel.position.set(0, 8, 2);
+        topPanel.rotation.x = Math.PI / 2;
+        envScene.add(topPanel);
+
+        const pinkPanel = new THREE.Mesh(
+          new THREE.PlaneGeometry(10, 8),
+          new THREE.MeshBasicMaterial({ color: 0xFF4D9D, side: THREE.DoubleSide })
+        );
+        pinkPanel.position.set(-7, 2, 3);
+        pinkPanel.rotation.y = Math.PI / 2.4;
+        envScene.add(pinkPanel);
+
+        const skyPanel = new THREE.Mesh(
+          new THREE.PlaneGeometry(10, 8),
+          new THREE.MeshBasicMaterial({ color: 0x3DE0FF, side: THREE.DoubleSide })
+        );
+        skyPanel.position.set(7, 2, 3);
+        skyPanel.rotation.y = -Math.PI / 2.4;
+        envScene.add(skyPanel);
+
+        const pmremGenerator = new THREE.PMREMGenerator(renderer);
+        const envRT = pmremGenerator.fromScene(envScene, 0.05);
+        scene.environment = envRT.texture;
+        pmremGenerator.dispose();
+        topPanel.geometry.dispose();
+        topPanel.material.dispose();
+        pinkPanel.geometry.dispose();
+        pinkPanel.material.dispose();
+        skyPanel.geometry.dispose();
+        skyPanel.material.dispose();
+
+        // 3점 무대 조명 구성 (은은한 반사광 및 윤곽 림라이트)
+        const hemiLight = new THREE.HemisphereLight(0x9ec5ff, 0x100b1e, 0.65);
+        scene.add(hemiLight);
+
+        const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
+        keyLight.position.set(4.5, 7.5, 6.5);
+        scene.add(keyLight);
+
+        const pinkRimLight = new THREE.DirectionalLight(0xFF4D9D, 1.5);
+        pinkRimLight.position.set(-6.0, 2.5, -4.5);
+        scene.add(pinkRimLight);
+
+        const skyRimLight = new THREE.DirectionalLight(0x3DE0FF, 1.4);
+        skyRimLight.position.set(5.5, -2.0, -3.5);
+        scene.add(skyRimLight);
+
+        // ===================================================================
+        // Three.js 기본 도형으로 조립한 다층 3D LP 레코드 (THREE.Group)
+        // ===================================================================
+        const lpRoot = new THREE.Group();
+        const lpTiltGroup = new THREE.Group();
+        lpRoot.add(lpTiltGroup);
+        scene.add(lpRoot);
+
+        // 1) 하단 검은 베이스 원반 층
+        const baseVinylGeo = new THREE.CylinderGeometry(3.05, 3.05, 0.08, 96);
+        const baseVinylMat = new THREE.MeshPhysicalMaterial({
+          color: 0x0e0f1c,
+          roughness: 0.22,
+          metalness: 0.28,
+          clearcoat: 1.0,
+          clearcoatRoughness: 0.14,
+          envMapIntensity: 1.2,
+        });
+        const baseVinylMesh = new THREE.Mesh(baseVinylGeo, baseVinylMat);
+        lpTiltGroup.add(baseVinylMesh);
+
+        // 2) 메인 검은색 LP 원반 층 (광택 반사)
+        const mainVinylGeo = new THREE.CylinderGeometry(3.15, 3.15, 0.07, 96);
+        const mainVinylMat = new THREE.MeshPhysicalMaterial({
+          color: 0x111224,
+          roughness: 0.15,
+          metalness: 0.35,
+          clearcoat: 1.0,
+          clearcoatRoughness: 0.08,
+          envMapIntensity: 1.45,
+        });
+        const mainVinylMesh = new THREE.Mesh(mainVinylGeo, mainVinylMat);
+        lpTiltGroup.add(mainVinylMesh);
+
+        // 외곽 빛 반사 림 링 (은은한 테두리 광택)
+        const outerRimGeo = new THREE.TorusGeometry(3.15, 0.032, 16, 128);
+        const outerRimMat = new THREE.MeshStandardMaterial({
+          color: 0x454b72,
+          roughness: 0.18,
+          metalness: 0.88,
+          envMapIntensity: 1.5,
+        });
+        const outerRimMesh = new THREE.Mesh(outerRimGeo, outerRimMat);
+        outerRimMesh.rotation.x = Math.PI / 2;
+        lpTiltGroup.add(outerRimMesh);
+
+        // 3) 하늘색(#3DE0FF) LP 홈 링 3개
+        const grooveRadii = [1.58, 2.18, 2.74];
+        const grooveMat = new THREE.MeshStandardMaterial({
+          color: 0x3DE0FF,
+          emissive: 0x1da8cc,
+          emissiveIntensity: 0.55,
+          roughness: 0.2,
+          metalness: 0.78,
+          envMapIntensity: 1.3,
+        });
+        const grooveMeshes = grooveRadii.map((radius) => {
+          const geo = new THREE.TorusGeometry(radius, 0.024, 16, 128);
+          const mesh = new THREE.Mesh(geo, grooveMat);
+          mesh.rotation.x = Math.PI / 2;
+          lpTiltGroup.add(mesh);
+          return mesh;
+        });
+
+        // 4) 가운데 핑크색(#FF4D9D) 앨범 라벨
+        const labelGeo = new THREE.CylinderGeometry(1.06, 1.06, 0.11, 64);
+        const labelMat = new THREE.MeshPhysicalMaterial({
+          color: 0xFF4D9D,
+          emissive: 0x5c0c34,
+          emissiveIntensity: 0.32,
+          roughness: 0.32,
+          metalness: 0.18,
+          clearcoat: 0.75,
+          clearcoatRoughness: 0.15,
+        });
+        const labelMesh = new THREE.Mesh(labelGeo, labelMat);
+        lpTiltGroup.add(labelMesh);
+
+        // 라벨 테두리 포인트 링
+        const labelRingGeo = new THREE.TorusGeometry(1.06, 0.022, 14, 72);
+        const labelRingMat = new THREE.MeshStandardMaterial({
+          color: 0xffe0ef,
+          roughness: 0.2,
+          metalness: 0.85,
+        });
+        const labelRingMesh = new THREE.Mesh(labelRingGeo, labelRingMat);
+        labelRingMesh.rotation.x = Math.PI / 2;
+        lpTiltGroup.add(labelRingMesh);
+
+        // 5) 중앙 스핀들 홀 캡 (상단 마감)
+        const spindleCollarGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.14, 32);
+        const spindleCollarMat = new THREE.MeshStandardMaterial({
+          color: 0xd8dff7,
+          roughness: 0.18,
+          metalness: 0.92,
+        });
+        const spindleCollarMesh = new THREE.Mesh(spindleCollarGeo, spindleCollarMat);
+        lpTiltGroup.add(spindleCollarMesh);
+
+        const spindleHoleGeo = new THREE.CylinderGeometry(0.11, 0.11, 0.17, 32);
+        const spindleHoleMat = new THREE.MeshStandardMaterial({
+          color: 0x070712,
+          roughness: 0.5,
+          metalness: 0.2,
+        });
+        const spindleHoleMesh = new THREE.Mesh(spindleHoleGeo, spindleHoleMat);
+        lpTiltGroup.add(spindleHoleMesh);
+
+        // ===================================================================
+        // 스크롤 진행도(0~1) 계산 및 3단계 부드러운 감쇠(lerp) 제어
+        // ===================================================================
+        let targetProgress = 0;
+        let currentProgress = 0;
+        let isShowcaseVisible = true;
+
+        function clamp01(val) {
+          return Math.max(0, Math.min(1, val));
+        }
+
+        function smoothstep(edge0, edge1, x) {
+          const t = clamp01((x - edge0) / (edge1 - edge0));
+          return t * t * (3 - 2 * t);
+        }
+
+        // 스크롤 위치 기반 목표 진행도(0~1) 계산
+        function updateScrollTarget() {
+          const rect = showcaseSection.getBoundingClientRect();
+          const scrollableDistance = showcaseSection.offsetHeight - window.innerHeight;
+          if (scrollableDistance <= 0) {
+            targetProgress = 0;
+            return;
+          }
+          targetProgress = clamp01(-rect.top / scrollableDistance);
+        }
+
+        window.addEventListener('scroll', updateScrollTarget, { passive: true });
+        updateScrollTarget();
+
+        // 화면 비율 변화에 따른 리사이즈 대응
+        let currentAspect = initWidth / initHeight;
+        let isMobileLayout = window.innerWidth <= 767;
+        let isTabletLayout = window.innerWidth >= 768 && window.innerWidth <= 1023;
+
+        function handleResize() {
+          const width = Math.max(stickyContainer.clientWidth, 1);
+          const height = Math.max(stickyContainer.clientHeight, 1);
+          const pixelRatio = getClampedPixelRatio();
+
+          currentAspect = width / height;
+          isMobileLayout = window.innerWidth <= 767;
+          isTabletLayout = window.innerWidth >= 768 && window.innerWidth <= 1023;
+          camera.aspect = currentAspect;
+          camera.updateProjectionMatrix();
+
+          renderer.setPixelRatio(pixelRatio);
+          renderer.setSize(width, height, false);
+          updateScrollTarget();
+        }
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        const resizeObserver =
+          typeof ResizeObserver !== 'undefined' ? new ResizeObserver(handleResize) : null;
+        if (resizeObserver) {
+          resizeObserver.observe(stickyContainer);
+        }
+
+        // WebGL 컨텍스트 손실 및 복구 안전 처리
+        let isContextLost = false;
+        canvas.addEventListener('webglcontextlost', (e) => {
+          e.preventDefault();
+          isContextLost = true;
+        });
+        canvas.addEventListener('webglcontextrestored', () => {
+          isContextLost = false;
+          handleResize();
+        });
+
+        // 가시성 감지 (뷰포트 밖에서는 렌더링 절약)
+        const intersectionObserver =
+          typeof IntersectionObserver !== 'undefined'
+            ? new IntersectionObserver(
+                (entries) => {
+                  isShowcaseVisible = entries[0]?.isIntersecting ?? true;
+                },
+                { rootMargin: '120px 0px' }
+              )
+            : null;
+        if (intersectionObserver) {
+          intersectionObserver.observe(showcaseSection);
+        }
+
+        if (!isSoftwareGl) {
+          renderer.compile(scene, camera);
+        }
+
+        // 진행도(p: 0~1)에 따른 LP 3D 변환 및 텍스트 상태 반영
+        function applyShowcaseState(p) {
+          // 1단계 (0 ~ 0.33): 작게 시작해서 Y축으로 한 바퀴(2π) 돌며 점점 커짐
+          const s1 = smoothstep(0.0, 0.33, p);
+          // 2단계 (0.33 ~ 0.66): PC·태블릿은 왼쪽 이동 / 모바일은 위로 이동하며 기울어짐
+          const s2 = smoothstep(0.33, 0.66, p);
+          // 3단계 (0.66 ~ 1.0): 원반 층이 위아래로 천천히 벌어지며 분해됨
+          const s3 = smoothstep(0.66, 1.0, p);
+
+          // 현재 뷰포트 비율 기준 원점(z=0)에서의 절반 가로 폭 (camera.fov=42°, z=12.2)
+          const halfFrustumWidth = 4.683 * currentAspect;
+
+          if (isMobileLayout) {
+            // 모바일(390px 등): 상단 영역 안에 온전히 들어가고 하단 문구와 겹치지 않는 크기·높이
+            const mobileMaxScale = Math.min(0.58, Math.max(0.42, currentAspect * 0.96));
+            const scale = THREE.MathUtils.lerp(0.28, mobileMaxScale, s1);
+            lpRoot.scale.setScalar(scale);
+
+            lpRoot.position.x = 0;
+            lpRoot.position.y = THREE.MathUtils.lerp(0, 1.98, s2) + s3 * 0.08;
+          } else if (isTabletLayout) {
+            // 태블릿(820px 세로/가로 포함): 왼쪽 절반 영역 안에 맞춰 좌측 잘림 및 오른쪽 글 침범 방지
+            const tabletMaxScale = Math.min(0.92, (halfFrustumWidth * 0.44) / 3.15);
+            const scale = THREE.MathUtils.lerp(0.32, tabletMaxScale, s1);
+            lpRoot.scale.setScalar(scale);
+
+            const leftTargetX = -Math.min(Math.max(halfFrustumWidth * 0.52, 1.45), 2.65);
+            lpRoot.position.x = THREE.MathUtils.lerp(0, leftTargetX, s2);
+            lpRoot.position.y = THREE.MathUtils.lerp(0, -0.15, s2);
+          } else {
+            // PC: 기존 비율과 위치 유지
+            const scale = THREE.MathUtils.lerp(0.36, 1.05, s1);
+            lpRoot.scale.setScalar(scale);
+
+            const leftTargetX = -Math.min(Math.max(currentAspect * 1.48, 2.1), 2.95);
+            lpRoot.position.x = THREE.MathUtils.lerp(0, leftTargetX, s2);
+            lpRoot.position.y = THREE.MathUtils.lerp(0, -0.15, s2);
+          }
+
+          // 회전: 1단계에서 Y축으로 1회전(2π), 2·3단계에서 빛 반사가 흐르도록 추가 회전
+          lpTiltGroup.rotation.y = s1 * Math.PI * 2 + s2 * 0.65 + s3 * 0.45;
+          // 기울기: 모바일에서는 하단 문구와 겹치지 않도록 최대 기울기를 완만하게 제한
+          const stage2Tilt = isMobileLayout ? 0.78 : 0.94;
+          const stage3Tilt = isMobileLayout ? 0.08 : 0.14;
+          lpTiltGroup.rotation.x = THREE.MathUtils.lerp(0.55, stage2Tilt, s2) + s3 * stage3Tilt;
+          lpTiltGroup.rotation.z = THREE.MathUtils.lerp(0, isMobileLayout ? -0.1 : -0.22, s2);
+
+          // 3단계 원반 층 위아래 분해 (모바일에서는 하단 텍스트와 겹치지 않게 분해 간격 최적화)
+          const explodeScale = isMobileLayout ? 0.68 : isTabletLayout ? Math.min(1.0, halfFrustumWidth / 4.2) : 1.0;
+          baseVinylMesh.position.y = -0.05 - s3 * 1.45 * explodeScale;
+          outerRimMesh.position.y = -0.02 - s3 * 0.78 * explodeScale;
+          mainVinylMesh.position.y = 0.0 - s3 * 0.18 * explodeScale;
+
+          grooveMeshes[0].position.y = 0.04 + s3 * 0.48 * explodeScale;
+          grooveMeshes[1].position.y = 0.04 + s3 * 0.92 * explodeScale;
+          grooveMeshes[2].position.y = 0.04 + s3 * 1.36 * explodeScale;
+
+          labelMesh.position.y = 0.02 + s3 * 1.85 * explodeScale;
+          labelRingMesh.position.y = 0.06 + s3 * 1.85 * explodeScale;
+          spindleCollarMesh.position.y = 0.03 + s3 * 2.32 * explodeScale;
+          spindleHoleMesh.position.y = 0.03 + s3 * 2.32 * explodeScale;
+
+          // 오른쪽 텍스트 2단계 <-> 3단계 교차 전환 (위로 스크롤 시 자연스럽게 역재생)
+          const stage2In = smoothstep(0.38, 0.48, p);
+          const stage2Out = 1 - smoothstep(0.63, 0.71, p);
+          const stage2Opacity = stage2In * stage2Out;
+          const stage2Offset = (1 - stage2In) * 26 - (1 - stage2Out) * 20;
+
+          copyStage2.style.opacity = stage2Opacity.toFixed(3);
+          copyStage2.style.transform = `translate3d(0, ${stage2Offset.toFixed(1)}px, 0)`;
+
+          const stage3In = smoothstep(0.69, 0.79, p);
+          const stage3Offset = (1 - stage3In) * 26;
+
+          copyStage3.style.opacity = stage3In.toFixed(3);
+          copyStage3.style.transform = `translate3d(0, ${stage3Offset.toFixed(1)}px, 0)`;
+        }
+
+        // 소프트웨어 WebGL 환경용 프레임 간격 제어 헬퍼
+        let frameId = 0;
+        function afterDraw(cb) {
+          const gl = renderer.getContext();
+          if (gl && typeof gl.fenceSync === 'function') {
+            const sync = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
+            gl.flush();
+            const poll = () => {
+              const state = sync && gl.getSyncParameter(sync, gl.SYNC_STATUS);
+              if (state === gl.UNSIGNALED) {
+                frameId = window.setTimeout(poll, 5);
+              } else {
+                if (sync) gl.deleteSync(sync);
+                frameId = window.setTimeout(cb, 80);
+              }
+            };
+            frameId = window.setTimeout(poll, 5);
+          } else {
+            frameId = window.setTimeout(cb, 80);
+          }
+        }
+
+        // 애니메이션 루프: lerp로 스크롤 정지 시에도 부드럽게 감속 후 정지 (탭 비활성 시 정지)
+        const clock = new THREE.Clock();
+        let isTabVisible = !document.hidden;
+
+        function animate() {
+          if (isContextLost || !isTabVisible) return;
+
+          const delta = Math.min(clock.getDelta(), 0.1);
+
+          if (prefersReducedMotion) {
+            currentProgress = targetProgress;
+          } else {
+            // 프레임 레이트에 무관한 부드러운 lerp 감쇠 보간
+            const lerpAlpha = 1 - Math.exp(-7.0 * delta);
+            currentProgress = THREE.MathUtils.lerp(currentProgress, targetProgress, lerpAlpha);
+            if (Math.abs(targetProgress - currentProgress) < 0.0002) {
+              currentProgress = targetProgress;
+            }
+          }
+
+          if (isShowcaseVisible || Math.abs(targetProgress - currentProgress) > 0.0002) {
+            applyShowcaseState(currentProgress);
+            renderer.render(scene, camera);
+          }
+
+          if (isTabVisible) {
+            if (isSoftwareGl) {
+              afterDraw(animate);
+            } else {
+              frameId = requestAnimationFrame(animate);
+            }
+          }
+        }
+
+        function handleVisibilityChange() {
+          if (document.hidden) {
+            isTabVisible = false;
+            cancelAnimationFrame(frameId);
+            clearTimeout(frameId);
+          } else {
+            isTabVisible = true;
+            // 가려져 있던 구간의 큰 delta를 비우고 이어서 재생
+            clock.getDelta();
+            animate();
+          }
+        }
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        applyShowcaseState(0);
+        if (isTabVisible) {
+          animate();
+        }
+
+        // 페이지 이탈 시 리소스 정리
+        window.addEventListener('beforeunload', () => {
+          cancelAnimationFrame(frameId);
+          clearTimeout(frameId);
+          document.removeEventListener('visibilitychange', handleVisibilityChange);
+          if (resizeObserver) resizeObserver.disconnect();
+          if (intersectionObserver) intersectionObserver.disconnect();
+          window.removeEventListener('resize', handleResize);
+          window.removeEventListener('scroll', updateScrollTarget);
+          envRT.dispose();
+          baseVinylGeo.dispose();
+          baseVinylMat.dispose();
+          mainVinylGeo.dispose();
+          mainVinylMat.dispose();
+          outerRimGeo.dispose();
+          outerRimMat.dispose();
+          grooveMeshes.forEach((m) => m.geometry.dispose());
+          grooveMat.dispose();
+          labelGeo.dispose();
+          labelMat.dispose();
+          labelRingGeo.dispose();
+          labelRingMat.dispose();
+          spindleCollarGeo.dispose();
+          spindleCollarMat.dispose();
+          spindleHoleGeo.dispose();
+          spindleHoleMat.dispose();
+          renderer.dispose();
+        });
+      })();
+    </script>
+  </body>
+</html>

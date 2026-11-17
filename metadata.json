@@ -1,0 +1,6 @@
+{
+  "name": "LUMEN Entertainment",
+  "description": "LUMEN Entertainment 공식 웹사이트 - 소리에 빛을 입히다",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
